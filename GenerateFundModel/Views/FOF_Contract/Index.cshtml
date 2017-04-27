@@ -1,0 +1,135 @@
+﻿@model IEnumerable<FundClear.Models.FOF_Contract>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>FOF类合同</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Contract_Status.状态)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FOF_Product.产品名称)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Investor.姓名)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sales_Branch.分公司名称)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sales_Person.理财师姓名)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.购买金额)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.购买份额)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.赎回金额)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.投资人姓名)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.投资人身份证号)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.投资人开户银行)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.投资人银行账号)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.投资人银行账户名)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.购买日期)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Input_person_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.录入时间)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Audit_person_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.审核时间)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Contract_Status.状态)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FOF_Product.产品名称)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Investor.姓名)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sales_Branch.分公司名称)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sales_Person.理财师姓名)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.购买金额)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.购买份额)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.赎回金额)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.投资人姓名)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.投资人身份证号)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.投资人开户银行)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.投资人银行账号)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.投资人银行账户名)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.购买日期)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Input_person_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.录入时间)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Audit_person_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.审核时间)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Contract_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Contract_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Contract_id })
+        </td>
+    </tr>
+}
+
+</table>

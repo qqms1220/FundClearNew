@@ -1,0 +1,72 @@
+﻿@model IEnumerable<FundClear.Models.Fix_Prod_Batch>
+
+@{
+    ViewBag.Title = "产品批次列表";
+}
+
+<h2>产品批次列表</h2>
+
+<p>
+    @Html.ActionLink("新建", "Create")
+</p>
+@using (Html.BeginForm())
+{
+    <p>
+        选择产品:
+         @Html.DropDownList("SelectedProduct", "所有") 
+         @Html.DropDownList("SelectedStatus","所有") 
+        <input type="submit" value="筛选" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Batch_Status.产品批次状态)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fix_Product.产品名称)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.批次名称)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.批次金额)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.批次创建人)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.批次创建时间)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Batch_Status.产品批次状态)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fix_Product.产品名称)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.批次名称)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.批次金额)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.批次创建人)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.批次创建时间)
+        </td>
+        <td>
+            @Html.ActionLink("编辑", "Edit", new { id=item.Batch_id }) |
+            @Html.ActionLink("详情", "Details", new { id=item.Batch_id }) |
+            @Html.ActionLink("删除", "Delete", new { id=item.Batch_id })
+        </td>
+    </tr>
+}
+
+</table>

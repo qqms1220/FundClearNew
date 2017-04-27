@@ -1,0 +1,66 @@
+﻿@model FundClear.Models.Fix_Prod_Batch
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Fix_Prod_Batch</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Batch_Status.产品批次状态)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Batch_Status.产品批次状态)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fix_Product.产品名称)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fix_Product.产品名称)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.批次名称)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.批次名称)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.批次金额)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.批次金额)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.批次创建人)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.批次创建人)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.批次创建时间)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.批次创建时间)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Batch_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

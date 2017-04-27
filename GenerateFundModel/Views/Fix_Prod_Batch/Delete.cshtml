@@ -1,0 +1,72 @@
+﻿@model FundClear.Models.Fix_Prod_Batch
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Fix_Prod_Batch</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Batch_Status.产品批次状态)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Batch_Status.产品批次状态)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fix_Product.产品名称)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fix_Product.产品名称)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.批次名称)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.批次名称)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.批次金额)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.批次金额)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.批次创建人)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.批次创建人)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.批次创建时间)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.批次创建时间)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

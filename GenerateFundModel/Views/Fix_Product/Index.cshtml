@@ -1,0 +1,111 @@
+﻿@model IEnumerable<FundClear.Models.Fix_Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Borrower.借款方名字)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.产品名称)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.产品状态)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.存期月数)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.募集规模)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.最低认购金额)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.管理机构)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.托管机构)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.托管账户名)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.托管账号)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.托管账户开户行)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.服务费率)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.付息方式)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.付息日)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Borrower.借款方名字)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.产品名称)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.产品状态)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.存期月数)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.募集规模)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.最低认购金额)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.管理机构)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.托管机构)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.托管账户名)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.托管账号)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.托管账户开户行)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.服务费率)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.付息方式)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.付息日)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Product_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Product_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Product_id })
+        </td>
+    </tr>
+}
+
+</table>

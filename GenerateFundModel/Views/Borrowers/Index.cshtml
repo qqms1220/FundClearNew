@@ -1,0 +1,69 @@
+﻿@model PagedList.IPagedList<FundClear.Models.Borrower>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "融资方列表";
+}
+
+<h2>融资方列表</h2>
+
+<p>
+    @Html.ActionLink("新建", "Create")
+</p>
+@using (Html.BeginForm("Index", "Borrowers", FormMethod.Get))
+{
+    <p>
+        按名称查找: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string) 
+        <input type="submit" value="查找" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("融资方名称", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            开户行
+        </th>
+        <th>
+            银行户名
+        </th>
+        <th>
+            银行账号
+        </th>
+       
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.借款方名字)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.借款方开户银行)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.借款方账户名)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.借款方银行账号)
+            </td>
+           
+            <td>
+                @Html.ActionLink("编辑", "Edit", new { id = item.Borrower_id }) |
+                @Html.ActionLink("详情", "Details", new { id = item.Borrower_id }) |
+                @Html.ActionLink("删除", "Delete", new { id = item.Borrower_id })
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+页面 @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

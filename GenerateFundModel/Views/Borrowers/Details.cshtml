@@ -1,0 +1,66 @@
+﻿@model FundClear.Models.Borrower
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Borrower</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.借款方名字)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.借款方名字)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.借款方开户银行)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.借款方开户银行)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.借款方账户名)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.借款方账户名)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.借款方银行账号)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.借款方银行账号)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.借款方电话)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.借款方电话)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.借款方电邮)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.借款方电邮)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Borrower_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,87 @@
+﻿@model IEnumerable<FundClear.Models.FOF_Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>FOF类产品</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.产品名称)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.管理机构)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.封闭月数)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.托管人)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.托管账户银行户名)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.托管账户银行账号)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.托管账号开户行)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.募集规模)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.最低认购金额)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.认购费率)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.产品名称)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.管理机构)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.封闭月数)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.托管人)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.托管账户银行户名)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.托管账户银行账号)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.托管账号开户行)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.募集规模)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.最低认购金额)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.认购费率)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Product_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Product_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Product_id })
+        </td>
+    </tr>
+}
+
+</table>

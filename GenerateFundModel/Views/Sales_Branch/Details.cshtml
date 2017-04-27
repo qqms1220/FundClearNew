@@ -1,0 +1,50 @@
+﻿@model FundClear.Models.Sales_Branch
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Sales_Branch</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.分公司名称)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.分公司名称)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.分公司地址)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.分公司地址)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.电话)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.电话)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.联系人)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.联系人)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Branch_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

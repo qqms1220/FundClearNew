@@ -1,0 +1,63 @@
+﻿@model IEnumerable<FundClear.Models.Sales_Person>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>理财师列表</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Sales_Branch.分公司名称)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.理财师姓名)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.理财师身份证号)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.电话)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.电子邮件)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.状态)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sales_Branch.分公司名称)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.理财师姓名)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.理财师身份证号)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.电话)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.电子邮件)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.状态)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Sales_Person_Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Sales_Person_Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Sales_Person_Id })
+        </td>
+    </tr>
+}
+
+</table>
