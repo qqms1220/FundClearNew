@@ -88,26 +88,50 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.开户银行, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.本金开户行, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.开户银行, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.开户银行, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.本金开户行, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.本金开户行, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.银行账号, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.本金账号, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.银行账号, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.银行账号, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.本金账号, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.本金账号, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.银行户名, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.本金户名, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.银行户名, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.银行户名, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.本金户名, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.本金户名, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.收益开户行, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.收益开户行, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.收益开户行, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.收益账号, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.收益账号, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.收益账号, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.收益户名, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.收益户名, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.收益户名, "", new { @class = "text-danger" })
             </div>
         </div>
 

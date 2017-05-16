@@ -1,0 +1,114 @@
+﻿@model FundClear.Models.到期项目表
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>到期项目表</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.融资方)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.融资方)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.合伙企业)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.合伙企业)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.还款日期)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.还款日期)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.投资金额)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.投资金额)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.回款本金)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.回款本金)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.收益金额)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.收益金额)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.服务费金额)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.服务费金额)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.回款金额)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.回款金额)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.打款日期)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.打款日期)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.产品期限)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.产品期限)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.兑付方式)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.兑付方式)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.本期兑付内容)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.本期兑付内容)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -36,6 +36,21 @@ namespace FundClear.Controllers
             return View(fix_Product);
         }
 
+        // GET: Fix_Product/ BatchContracts/5
+        public ActionResult BatchContracts(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Fix_Product fix_Product = db.Fix_Product.Find(id);
+            if (fix_Product == null)
+            {
+                return HttpNotFound();
+            }           
+            return View(fix_Product);
+        }
+
         // GET: Fix_Product/Create
         public ActionResult Create()
         {

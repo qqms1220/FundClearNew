@@ -51,7 +51,7 @@ namespace FundClear.Models
         [StringLength(50)]
         public string 托管账户开户行 { get; set; }
 
-        public double 服务费率 { get; set; }
+        public decimal 服务费率 { get; set; }
         public 付息方式 付息方式 { get; set; }
 
         [Range(1,31)]

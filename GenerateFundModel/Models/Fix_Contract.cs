@@ -31,23 +31,33 @@ namespace FundClear.Models
         public string 投资人身份证号 { get; set; }
 
         [StringLength(50)]
-        public string 投资人银行账户名 { get; set; }
+        public string 本金账户名 { get; set; }
 
         [StringLength(50)]
-        public string 投资人银行账号 { get; set; }
+        public string 本金银行账号 { get; set; }
 
         [StringLength(50)]
-        public string 投资人开户银行 { get; set; }
+        public string 本金开户银行 { get; set; }
+
+        [StringLength(50)]
+        public string 收益账户名 { get; set; }
+
+        [StringLength(50)]
+        public string 收益银行账号 { get; set; }
+
+        [StringLength(50)]
+        public string 收益开户银行 { get; set; }
 
 
         [Display(Name = "理财师/渠道")]
         public int? Salesperson_id { get; set; }
 
-        public double? 收益率 { get; set; }
+        [Required]
+        public decimal 收益率 { get; set; }
 
         public int 存款月数 { get; set; }
 
-        public decimal? 已付收益 { get; set; }
+        public decimal 已付收益 { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -55,7 +65,11 @@ namespace FundClear.Models
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime? 成立日期 { get; set; }     
+        public DateTime? 成立日期 { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? 到期日期 { get; set; }
 
         public 付息方式? 付息方式 { get; set; }
 
@@ -72,16 +86,13 @@ namespace FundClear.Models
         public int? Audit_person_id { get; set; }
 
         public DateTime? 审计时间 { get; set; }
-
-
-        [Display(Name = "合同状态")]
-        public int? Status_id { get; set; }
-
+     
+        public 合同状态 合同状态 { get; set; }
 
         [Display(Name = "分公司")]
         public int? Branch_id { get; set; }
 
-        public virtual Contract_Status Contract_Status { get; set; }
+        public string 备注 { get; set; }
 
         public virtual Fix_Prod_Batch Fix_Prod_Batch { get; set; }
 

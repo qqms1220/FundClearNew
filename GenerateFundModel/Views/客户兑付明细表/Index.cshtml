@@ -1,0 +1,110 @@
+﻿@model IEnumerable<FundClear.Models.客户兑付明细表>
+
+@{
+    ViewBag.Title = "客户兑付明细表";
+}
+
+<h2>客户兑付明细表</h2>  
+
+@Html.ActionLink("导出到Excel", "ExportToExcel", null,new { @class = "btn btn-primary btn-sm" })
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.进账日期)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.姓名)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.金额)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.本金归还账户)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.分配日期)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.收益率)%
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.到期本金)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.到期收益)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.收益分配账户)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.购买期限)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.分配方式)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.客户入账账户)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.项目批次)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.备注)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.进账日期)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.姓名)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.金额)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.本金归还账户)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.分配日期)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.收益率 )%
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.到期本金)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.到期收益)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.收益分配账户)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.购买期限)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.分配方式)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.客户入账账户)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.项目批次)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.备注)
+        </td>
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |*@
+            @Html.ActionLink("详情", "Details", new { id=item.ID }) 
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
+        </td>
+    </tr>
+}
+
+</table>

@@ -21,15 +21,7 @@
                 @Html.EditorFor(model => model.批次名称, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.批次名称, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.批次金额, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.批次金额, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.批次金额, "", new { @class = "text-danger" })
-            </div>
-        </div>  
+        </div>        
 
         <div class="form-group">
             @Html.LabelFor(model => model.Product_id, "产品", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -37,13 +29,45 @@
                 @Html.DropDownList("Product_id", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Product_id, "", new { @class = "text-danger" })
             </div>
+        </div>    
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.批次收益率, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.批次收益率, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.批次收益率, "", new { @class = "text-danger" })
+            </div>
+        </div>   
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.付息方式, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.付息方式, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.付息方式, "", new { @class = "text-danger" })
+            </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Batch_status_id, "状态", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.季末付息日, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Batch_status_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Batch_status_id, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.季末付息日, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.季末付息日, "", new { @class = "text-danger" })
+            </div>
+        </div>   
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.产品批次状态, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.产品批次状态, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.产品批次状态, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.划款日期, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.划款日期, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.划款日期, "", new { @class = "text-danger" })
             </div>
         </div>
 

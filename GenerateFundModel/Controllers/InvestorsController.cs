@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using FundClear.Models;
+using PagedList;
 
 namespace FundClear.Controllers
 {
@@ -15,10 +14,34 @@ namespace FundClear.Controllers
         private Fund db = new Fund();
 
         // GET: Investors
-        public ActionResult Index()
+        public ActionResult Index(string currentFilter, string searchString, int? page)
         {
-            return View(db.Investor.ToList());
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            int pageNumber = (page ?? 1);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var investors = db.Investor.Where(b => b.姓名.Contains(searchString)).OrderByDescending(i => i.Investor_id);
+                return View(investors.ToPagedList(pageNumber, Config.pageSize));
+            } else
+            {
+                var investors = db.Investor.OrderByDescending(i => i.Investor_id);
+                return View(investors.ToPagedList(pageNumber, Config.pageSize));
+            }
         }
+
+           
+         
 
         // GET: Investors/Details/5
         public ActionResult Details(int? id)
@@ -46,7 +69,7 @@ namespace FundClear.Controllers
         // 详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Investor_id,姓名,性别,生日,证件号码,证件类型,电话,电子邮件,加盟日期,地址,开户银行,银行账号,银行户名")] Investor investor)
+        public ActionResult Create([Bind(Include = "Investor_id,姓名,性别,生日,证件号码,证件类型,电话,电子邮件,加盟日期,地址,本金开户行,本金账号,本金户名,收益开户行,收益账号,收益户名")] Investor investor)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +101,7 @@ namespace FundClear.Controllers
         // 详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Investor_id,姓名,性别,生日,证件号码,证件类型,电话,电子邮件,加盟日期,地址,开户银行,银行账号,银行户名")] Investor investor)
+        public ActionResult Edit([Bind(Include = "Investor_id,姓名,性别,生日,证件号码,证件类型,电话,电子邮件,加盟日期,地址,本金开户行,本金账号,本金户名,收益开户行,收益账号,收益户名")] Investor investor)
         {
             if (ModelState.IsValid)
             {

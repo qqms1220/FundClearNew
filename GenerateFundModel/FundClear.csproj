@@ -189,20 +189,19 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Sales_BranchController.cs" />
     <Compile Include="Controllers\Sales_PersonController.cs" />
+    <Compile Include="Controllers\到期项目表Controller.cs" />
+    <Compile Include="Controllers\客户兑付明细表Controller.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Batch_Status.cs" />
     <Compile Include="Models\Borrower.cs" />
-    <Compile Include="Models\Contract_Status.cs" />
+    <Compile Include="Models\Config.cs" />
     <Compile Include="Models\Enum.cs" />
-    <Compile Include="Models\Fix_Batch_Running_Summary.cs" />
     <Compile Include="Models\Fix_Contract.cs" />
     <Compile Include="Models\Fix_Product.cs" />
     <Compile Include="Models\Fix_Prod_Batch.cs" />
     <Compile Include="Models\Fix_Prod_Batch_running.cs" />
-    <Compile Include="Models\Fix_Running_Summary.cs" />
     <Compile Include="Models\Fix_running_tab.cs" />
     <Compile Include="Models\FOF_Contract.cs" />
     <Compile Include="Models\FOF_Product.cs" />
@@ -215,6 +214,8 @@
     <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Models\System_Role.cs" />
     <Compile Include="Models\System_User.cs" />
+    <Compile Include="Models\到期项目表.cs" />
+    <Compile Include="Models\客户兑付明细表.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -319,6 +320,19 @@
     <Content Include="Views\Fix_Product\Details.cshtml" />
     <Content Include="Views\Fix_Product\Edit.cshtml" />
     <Content Include="Views\Fix_Product\Index.cshtml" />
+    <Content Include="Views\客户兑付明细表\Create.cshtml" />
+    <Content Include="Views\客户兑付明细表\Delete.cshtml" />
+    <Content Include="Views\客户兑付明细表\Details.cshtml" />
+    <Content Include="Views\客户兑付明细表\Edit.cshtml" />
+    <Content Include="Views\客户兑付明细表\Index.cshtml" />
+    <Content Include="Views\Fix_Contract\Running.cshtml" />
+    <Content Include="Views\Fix_Prod_Batch\BatchContractList.cshtml" />
+    <Content Include="Views\到期项目表\Create.cshtml" />
+    <Content Include="Views\到期项目表\Delete.cshtml" />
+    <Content Include="Views\到期项目表\Details.cshtml" />
+    <Content Include="Views\到期项目表\Edit.cshtml" />
+    <Content Include="Views\到期项目表\Index.cshtml" />
+    <Content Include="Views\Fix_Product\BatchContracts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

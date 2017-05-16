@@ -49,13 +49,22 @@ namespace FundClear.Models
         public string 地址 { get; set; }
 
         [StringLength(50)]
-        public string 开户银行 { get; set; }
+        public string 本金开户行 { get; set; }
 
         [StringLength(50)]
-        public string 银行账号 { get; set; }
+        public string 本金账号 { get; set; }
 
         [StringLength(50)]
-        public string 银行户名 { get; set; }
+        public string 本金户名 { get; set; }
+
+        [StringLength(50)]
+        public string 收益开户行 { get; set; }
+
+        [StringLength(50)]
+        public string 收益账号 { get; set; }
+
+        [StringLength(50)]
+        public string 收益户名 { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Fix_Contract> Fix_Contract { get; set; }

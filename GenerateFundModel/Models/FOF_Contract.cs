@@ -38,7 +38,8 @@ namespace FundClear.Models
 
         public int? SalesPerson_id { get; set; }
 
-        [Column(TypeName = "date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime 购买日期 { get; set; }
 
         public int? Branch_id { get; set; }
@@ -51,9 +52,7 @@ namespace FundClear.Models
 
         public DateTime? 审核时间 { get; set; }
 
-        public int? Contract_status_id { get; set; }
-
-        public virtual Contract_Status Contract_Status { get; set; }
+        public 合同状态 合同状态 { get; set; }       
 
         public virtual FOF_Product FOF_Product { get; set; }
 

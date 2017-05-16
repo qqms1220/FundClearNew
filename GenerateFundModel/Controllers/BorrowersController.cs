@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using FundClear.Models;
 using PagedList;
@@ -48,7 +46,7 @@ namespace FundClear.Controllers
                     break;
             }
 
-            int pageSize = 10;
+            int pageSize = Config.pageSize;
             int pageNumber = (page ?? 1);
             return View(borrowers.ToPagedList(pageNumber, pageSize));
         }

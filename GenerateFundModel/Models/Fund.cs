@@ -11,16 +11,12 @@
             : base("name=Fund")
         {
         }
-
-        public virtual DbSet<Batch_Status> Batch_Status { get; set; }
-        public virtual DbSet<Borrower> Borrower { get; set; }
-        public virtual DbSet<Contract_Status> Contract_Status { get; set; }
-        public virtual DbSet<Fix_Batch_Running_Summary> Fix_Batch_Running_Summary { get; set; }
+      
+        public virtual DbSet<Borrower> Borrower { get; set; } 
         public virtual DbSet<Fix_Contract> Fix_Contract { get; set; }
         public virtual DbSet<Fix_Prod_Batch> Fix_Prod_Batch { get; set; }
         public virtual DbSet<Fix_Prod_Batch_running> Fix_Prod_Batch_running { get; set; }
-        public virtual DbSet<Fix_Product> Fix_Product { get; set; }
-        public virtual DbSet<Fix_Running_Summary> Fix_Running_Summary { get; set; }
+        public virtual DbSet<Fix_Product> Fix_Product { get; set; }        
         public virtual DbSet<FOF_Contract> FOF_Contract { get; set; }
         public virtual DbSet<FOF_Product> FOF_Product { get; set; }
         public virtual DbSet<Investor> Investor { get; set; }
@@ -30,6 +26,8 @@
         public virtual DbSet<System_Role> System_Role { get; set; }
         public virtual DbSet<System_User> System_User { get; set; }
         public virtual DbSet<Fix_running_tab> Fix_running_tab { get; set; }
+        public virtual DbSet<客户兑付明细表> 客户兑付明细表 { get; set; }
+        public virtual DbSet<到期项目表> 到期项目表 { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -37,11 +35,6 @@
                 .HasMany(e => e.Fix_Product)
                 .WithRequired(e => e.Borrower)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Contract_Status>()
-                .HasMany(e => e.FOF_Contract)
-                .WithOptional(e => e.Contract_Status)
-                .HasForeignKey(e => e.Contract_status_id);
 
             modelBuilder.Entity<Fix_Contract>()
                 .Property(e => e.已付收益)
@@ -83,6 +76,38 @@
             modelBuilder.Entity<Fix_running_tab>()
                 .Property(e => e.金额)
                 .HasPrecision(18, 4);
+
+            modelBuilder.Entity<Fix_Product>()
+              .Property(e => e.服务费率)
+              .HasPrecision(18, 2);
+
+            modelBuilder.Entity<到期项目表>()
+               .Property(e => e.投资金额)
+               .HasPrecision(18, 0);
+
+            modelBuilder.Entity<到期项目表>()
+                .Property(e => e.回款本金)
+                .HasPrecision(18, 0);
+
+            modelBuilder.Entity<到期项目表>()
+                .Property(e => e.收益金额)
+                .HasPrecision(18, 0);
+
+            modelBuilder.Entity<到期项目表>()
+                .Property(e => e.服务费金额)
+                .HasPrecision(18, 0);
+
+            modelBuilder.Entity<到期项目表>()
+                .Property(e => e.回款金额)
+                .HasPrecision(18, 0);
+
+            modelBuilder.Entity<客户兑付明细表>()
+                .Property(e => e.金额)
+                .HasPrecision(18, 0);
+
+            modelBuilder.Entity<客户兑付明细表>()
+                .Property(e => e.到期本金)
+                .HasPrecision(18, 0);
         }
     }
 }

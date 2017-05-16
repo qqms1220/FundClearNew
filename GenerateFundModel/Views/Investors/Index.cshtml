@@ -1,4 +1,6 @@
-﻿@model IEnumerable<FundClear.Models.Investor>
+﻿@model PagedList.IPagedList<FundClear.Models.Investor>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
@@ -6,46 +8,53 @@
 
 <h2>投资人列表</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div>
+    @Html.ActionLink("新建", "Create")
+    @using (Html.BeginForm("Index", "Investors", FormMethod.Get))
+    {
+    <p>    
+        按姓名查找: @Html.TextBox("SearchString")
+        <input type="submit" value="搜索" />
+    </p>
+    }
+</div>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.姓名)
+            姓名
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.性别)
+            性别
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.生日)
+            生日
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.证件号码)
+           证件号码
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.证件类型)
+          证件类型
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.电话)
+           电话
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.电子邮件)
+          电子邮件
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.加盟日期)
+           加盟日期
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.地址)
+           地址
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.开户银行)
+          本金开户行
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.银行账号)
+          本金账号
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.银行户名)
+           本金户名
         </th>
         <th></th>
     </tr>
@@ -80,20 +89,24 @@
             @Html.DisplayFor(modelItem => item.地址)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.开户银行)
+            @Html.DisplayFor(modelItem => item.本金开户行)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.银行账号)
+            @Html.DisplayFor(modelItem => item.本金账号)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.银行户名)
+            @Html.DisplayFor(modelItem => item.本金户名)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Investor_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Investor_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Investor_id })
+            @Html.ActionLink("修改", "Edit", new { id=item.Investor_id }) |
+            @Html.ActionLink("详情", "Details", new { id=item.Investor_id }) |
+            @Html.ActionLink("删除", "Delete", new { id=item.Investor_id })
         </td>
     </tr>
 }
 
 </table>
+页面 @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, currentFilter = ViewBag.CurrentFilter }))
