@@ -1,0 +1,20 @@
+﻿@model IEnumerable<FundClear.Models.到期项目表>
+
+@{
+    ViewBag.Title = "到期项目表";
+}
+
+<h2>到期项目表</h2>
+@using (Html.BeginForm("Export"))
+{
+    <p>
+        按借款人: @Html.TextBox("借款人")
+        还款日期
+        @Html.TextBox("还款日期起始") 
+        至
+        @Html.TextBox("还款日期终止")
+        按合伙企业:@Html.TextBox("合伙企业")
+        <input type="submit" value="导出" />
+    </p>
+}
+
