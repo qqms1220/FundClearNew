@@ -60,7 +60,6 @@
         $("#ContractType").change(function () {
             if (this.value == "1") {
                 $("#ContractType_Month").show();
-                document.getElementById("txtDay").value = "0";
                 $("#ContractType_Day").hide();
             }
             else {
@@ -79,10 +78,14 @@
             $("#PayDay").hide();
         }
         $("#PType").change(function () {
-            if (this.value == "1")
+            if (this.value == "1") {
+                document.getElementById("txtPayDay").value = "20";
                 $("#PayDay").show();
-            else
+            }
+            else {
+                document.getElementById("txtPayDay").value = "0";
                 $("#PayDay").hide();
+            }
         });
     });
 </script>
@@ -187,8 +190,7 @@
         <div class="form-group" id="ContractType_Day">
             @Html.LabelFor(model => model.存款天数, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.存款天数, new { htmlAttributes = new { id = "txtDay", @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.存款天数, "", new { @class = "text-danger" })
+                @Html.DropDownList("ContractDays", null, htmlAttributes: new { @class = "form-control" })
             </div>
         </div>  
 
@@ -203,7 +205,7 @@
         <div class="form-group" id="PayDay">
             @Html.LabelFor(model => model.付息日, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.付息日, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.付息日, new { htmlAttributes = new { id = "txtPayDay", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.付息日, "", new { @class = "text-danger" })
             </div>
         </div>   

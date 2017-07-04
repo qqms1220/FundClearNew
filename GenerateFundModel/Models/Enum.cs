@@ -63,5 +63,4 @@ namespace FundClear.Models
     {
         按月存入=1, 按天存入=2
     }
-
 }

@@ -258,7 +258,7 @@ namespace FundClear.Controllers
 
             ViewBag.Product_id = new SelectList(db.Fix_Product.Where(p=>p.产品状态 == 产品状态.在售), "Product_id", "产品名称");           
             ViewBag.Branch_id = new SelectList(db.Sales_Branch, "Branch_id", "分公司名称");
-
+            BindContractDays(0);
             BindContractType(0);
             return View();
         }
@@ -268,20 +268,22 @@ namespace FundClear.Controllers
         // 详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Contract_id,合同号,Product_id,金额,存款月数,存款天数,付息方式,付息日,投资人姓名,电话,地址,投资人身份证号,本金开户银行,本金账户名,本金银行账号,收益开户银行,收益账户名,收益银行账号,Salesperson_id,收益率,存款月数,购买日期,计息日期,成立日期,Batch_id,Input_person_id,输入时间,Audit_person_id,审计时间,合同状态,Branch_id,备注")] Fix_Contract fix_Contract)
+        public ActionResult Create([Bind(Include = "Contract_id,合同号,Product_id,金额,存款月数,付息方式,付息日,投资人姓名,电话,地址,投资人身份证号,本金开户银行,本金账户名,本金银行账号,收益开户银行,收益账户名,收益银行账号,Salesperson_id,收益率,存款月数,购买日期,计息日期,成立日期,Batch_id,Input_person_id,输入时间,Audit_person_id,审计时间,合同状态,Branch_id,备注")] Fix_Contract fix_Contract)
         {
-            string ContractType = Request.Form["ContractType"].ToString();
+            int ContractDays = int.Parse(Request.Form["ContractDays"].ToString());
+            int ContractType = int.Parse(Request.Form["ContractType"].ToString());
             if (ModelState.IsValid)       
             {  
                 //先判断成立日期,如果不为空则到期日期加上存款月数
                 if(fix_Contract.成立日期 != null)
                 {
-                    fix_Contract.到期日期 = GetExpireDate(ContractType, ContractType == "1" ? fix_Contract.存款月数 : fix_Contract.存款天数, fix_Contract.成立日期.Value);
+                    fix_Contract.到期日期 = GetExpireDate(ContractType, ContractType == 1 ? fix_Contract.存款月数 : fix_Contract.存款天数, fix_Contract.成立日期.Value);
                 }
 
                 fix_Contract.录入人 = User.Identity.Name;
                 fix_Contract.输入时间 = DateTime.Now;
-                fix_Contract.存入方式 = int.Parse(ContractType);
+                fix_Contract.存入方式 = ContractType;
+                fix_Contract.存款天数 = ContractType == 2 ? ContractDays : 0;
 
                 db.Fix_Contract.Add(fix_Contract);
                 db.SaveChanges();
@@ -292,7 +294,8 @@ namespace FundClear.Controllers
             ViewBag.Product_id = new SelectList(db.Fix_Product.Where(p => p.产品状态 == 产品状态.在售), "Product_id", "产品名称", fix_Contract.Product_id);         
             ViewBag.Branch_id = new SelectList(db.Sales_Branch, "Branch_id", "分公司名称", fix_Contract.Branch_id);
             ViewBag.Salesperson_id = new SelectList(db.Sales_Person.OrderBy(i => i.理财师姓名), "Sales_Person_Id", "理财师姓名", fix_Contract.Salesperson_id);
-            BindContractType(int.Parse(ContractType));
+            BindContractDays(ContractDays);
+            BindContractType(ContractType);
             return View(fix_Contract);
         }
         //[Authorize]
@@ -312,6 +315,7 @@ namespace FundClear.Controllers
             ViewBag.Batch_id = new SelectList(db.Fix_Prod_Batch.Where(b => b.Product_id == fix_Contract.Product_id), "Batch_id", "批次名称", fix_Contract.Batch_id); 
             ViewBag.Branch_id = new SelectList(db.Sales_Branch, "Branch_id", "分公司名称", fix_Contract.Branch_id);
             ViewBag.Salesperson_id = new SelectList(db.Sales_Person.OrderBy(i => i.理财师姓名), "Sales_Person_Id", "理财师姓名", fix_Contract.Salesperson_id);
+            BindContractDays(fix_Contract.存款天数);
             BindContractType(fix_Contract.存入方式);
             ViewData["PayType"] = fix_Contract.付息方式.Value.ToString() == "季末付" ? "true" : "false";
             return View(fix_Contract);
@@ -322,20 +326,22 @@ namespace FundClear.Controllers
         // 详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Contract_id,合同号,Product_id,金额,存款月数,存款天数,付息方式,付息日,投资人姓名,投资人身份证号,电话,地址,本金开户银行,本金账户名,本金银行账号,收益开户银行,收益账户名,收益银行账号,Salesperson_id,收益率,存款月数,购买日期,计息日期,成立日期,Batch_id,Input_person_id,输入时间,Audit_person_id,审计时间,合同状态,Branch_id,备注,已清算")] Fix_Contract fix_Contract)
+        public ActionResult Edit([Bind(Include = "Contract_id,合同号,Product_id,金额,存款月数,付息方式,付息日,投资人姓名,投资人身份证号,电话,地址,本金开户银行,本金账户名,本金银行账号,收益开户银行,收益账户名,收益银行账号,Salesperson_id,收益率,存款月数,购买日期,计息日期,成立日期,Batch_id,Input_person_id,输入时间,Audit_person_id,审计时间,合同状态,Branch_id,备注,已清算")] Fix_Contract fix_Contract)
         {
-            string ContractType = Request.Form["ContractType"].ToString();
+            int ContractDays = int.Parse(Request.Form["ContractDays"].ToString());
+            int ContractType = int.Parse(Request.Form["ContractType"].ToString());
             if (ModelState.IsValid)
             {  
                 //先判断成立日期,如果不为空则到期日期加上存款月数
                 if (fix_Contract.成立日期 != null)
                 {
-                    fix_Contract.到期日期 = GetExpireDate(ContractType, ContractType == "1" ? fix_Contract.存款月数 : fix_Contract.存款天数, fix_Contract.成立日期.Value);
+                    fix_Contract.到期日期 = GetExpireDate(ContractType, ContractType == 1 ? fix_Contract.存款月数 : fix_Contract.存款天数, fix_Contract.成立日期.Value);
                 }
 
                 fix_Contract.录入人 = User.Identity.Name;
                 fix_Contract.输入时间 = DateTime.Now;
-                fix_Contract.存入方式 = int.Parse(ContractType);
+                fix_Contract.存入方式 = ContractType;
+                fix_Contract.存款天数 = ContractType == 2 ? ContractDays : 0;
 
                 db.Entry(fix_Contract).State = EntityState.Modified;
                 db.SaveChanges();
@@ -343,7 +349,8 @@ namespace FundClear.Controllers
              //   return RedirectToAction("Index");
            
             }
-            BindContractType(int.Parse(ContractType));
+            BindContractDays(ContractDays);
+            BindContractType(ContractType);
             ViewBag.Batch_id = new SelectList(db.Fix_Prod_Batch.Where(p=>p.产品批次状态 == 产品批次状态.在售), "Batch_id", "批次名称", fix_Contract.Batch_id);
             ViewBag.Product_id = new SelectList(db.Fix_Product.Where(p => p.产品状态 == 产品状态.在售), "Product_id", "产品名称", fix_Contract.Product_id);
             ViewBag.Branch_id = new SelectList(db.Sales_Branch, "Branch_id", "分公司名称", fix_Contract.Branch_id);
@@ -413,19 +420,33 @@ namespace FundClear.Controllers
         }
 
         /// <summary>
+        /// 绑定存款天数并赋初始值
+        /// </summary>
+        /// <param name="value"></param>
+        private void BindContractDays(int value)
+        {
+            List<SelectListItem> List_ContractDays = new List<SelectListItem>();
+            List_ContractDays.Add(new SelectListItem() { Text = "30天", Value = "30", Selected = value == 30 });
+            List_ContractDays.Add(new SelectListItem() { Text = "60天", Value = "60", Selected = value == 60 });
+            List_ContractDays.Add(new SelectListItem() { Text = "90天", Value = "90", Selected = value == 90 });
+            List_ContractDays.Add(new SelectListItem() { Text = "180天", Value = "180", Selected = value == 180 });
+            ViewBag.ContractDays = List_ContractDays;
+        }
+
+        /// <summary>
         /// 获取到期日期
         /// </summary>
         /// <param name="ContractType">存入方式（按月/按天）</param>
         /// <param name="ContractTerm">存入期限</param>
         /// <param name="CreateDate">存入日期</param>
         /// <returns></returns>
-        private DateTime GetExpireDate(string ContractType,int ContractTerm, DateTime CreateDate)
+        private DateTime GetExpireDate(int ContractType,int ContractTerm, DateTime CreateDate)
         {
             switch (ContractType)
             {
-                case "1":
+                case 1:
                     return CreateDate.AddMonths(ContractTerm);
-                case "2":
+                case 2:
                     return CreateDate.AddDays(ContractTerm);
                 default:
                     return CreateDate.AddMonths(ContractTerm);

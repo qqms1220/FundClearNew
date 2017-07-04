@@ -65,8 +65,10 @@ namespace FundClear.Models
 
         public int 存入方式 { get; set; }
 
+        [Range(0, 100, ErrorMessage = "请输入一个0-100之间的整形数字")]
         public int 存款月数 { get; set; }
 
+        [Range(0, 1000,ErrorMessage="请输入一个0-1000之间的整形数字")]
         public int 存款天数 { get; set; }
 
         public decimal 已付收益 { get; set; }
