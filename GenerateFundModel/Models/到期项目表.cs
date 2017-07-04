@@ -19,7 +19,10 @@ namespace FundClear.Models
               
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime 还款日期 { get; set; }       
+        public DateTime 还款日期 { get; set; }
+
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "money")]
         public decimal? 投资金额 { get; set; }
         [DataType(DataType.Currency)]
         [Column(TypeName = "money")]

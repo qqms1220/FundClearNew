@@ -23,7 +23,7 @@ namespace FundClear.Models
 
     public enum 付息方式
     {
-        季付, 季末付
+        季付, 季末付,三十日付
     }
 
     public enum 产品状态
@@ -38,7 +38,7 @@ namespace FundClear.Models
 
     public enum 合同状态
     {
-        待审核, 生效, 已兑付, 作废
+        待审核, 生效, 已兑付, 作废,已录入
     }
 
     public enum 合同流水摘要
@@ -49,6 +49,19 @@ namespace FundClear.Models
     public enum 批次流水摘要
     {
         划款, 还息, 还本,还服务费
+    }
+
+    public enum 现金管理流水摘要
+    {
+        申购, 赎回
+    }
+
+    /// <summary>
+    /// 存入方式，按月存入值1，按天存入值2
+    /// </summary>
+    public enum 存入方式
+    {
+        按月存入=1, 按天存入=2
     }
 
 }

@@ -1,14 +1,22 @@
 ﻿@model IEnumerable<FundClear.Models.Sales_Person>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "理财师列表";
 }
 
 <h2>理财师列表</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("新建", "Create")   
 </p>
+@using (Html.BeginForm("Index", "Sales_Person", FormMethod.Post))
+{
+    <p>
+        分公司: @Html.DropDownList("SelectedBranch", "所有")      
+        姓名: @Html.TextBox("searchString")
+        <input type="submit" value="过滤" />
+    </p>
+}
 <table class="table">
     <tr>
         <th>
@@ -53,9 +61,9 @@
             @Html.DisplayFor(modelItem => item.状态)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Sales_Person_Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Sales_Person_Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Sales_Person_Id })
+            @Html.ActionLink("编辑", "Edit", new { id=item.Sales_Person_Id }) |
+            @Html.ActionLink("详情", "Details", new { id=item.Sales_Person_Id }) |
+            @Html.ActionLink("删除", "Delete", new { id=item.Sales_Person_Id })
         </td>
     </tr>
 }

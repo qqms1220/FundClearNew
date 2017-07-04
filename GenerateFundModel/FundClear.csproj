@@ -49,6 +49,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MvcPager, Version=1.5.0.17702, Culture=neutral, PublicKeyToken=f6872c5a09aed72c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\MvcPager.dll</HintPath>
+    </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
       <Private>True</Private>
@@ -111,6 +115,10 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Webdiyer.MvcPager, Version=3.0.2015.802, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Webdiyer.MvcPager.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -185,7 +193,6 @@
     <Compile Include="Controllers\FOF_ContractController.cs" />
     <Compile Include="Controllers\FOF_ProductController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InvestorsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Sales_BranchController.cs" />
     <Compile Include="Controllers\Sales_PersonController.cs" />
@@ -194,6 +201,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Help\ReadExcel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Borrower.cs" />
     <Compile Include="Models\Config.cs" />
@@ -207,7 +215,6 @@
     <Compile Include="Models\FOF_Product.cs" />
     <Compile Include="Models\Fund.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Investor.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Sales_Branch.cs" />
     <Compile Include="Models\Sales_Person.cs" />
@@ -220,6 +227,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Webdiyer.MvcPager.dll" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
@@ -241,7 +249,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -295,21 +305,11 @@
     <Content Include="Views\Sales_Branch\Details.cshtml" />
     <Content Include="Views\Sales_Branch\Edit.cshtml" />
     <Content Include="Views\Sales_Branch\Index.cshtml" />
-    <Content Include="Views\FOF_Contract\Create.cshtml" />
-    <Content Include="Views\FOF_Contract\Delete.cshtml" />
-    <Content Include="Views\FOF_Contract\Details.cshtml" />
-    <Content Include="Views\FOF_Contract\Edit.cshtml" />
-    <Content Include="Views\FOF_Contract\Index.cshtml" />
     <Content Include="Views\FOF_Product\Create.cshtml" />
     <Content Include="Views\FOF_Product\Delete.cshtml" />
     <Content Include="Views\FOF_Product\Details.cshtml" />
     <Content Include="Views\FOF_Product\Edit.cshtml" />
     <Content Include="Views\FOF_Product\Index.cshtml" />
-    <Content Include="Views\Investors\Create.cshtml" />
-    <Content Include="Views\Investors\Delete.cshtml" />
-    <Content Include="Views\Investors\Details.cshtml" />
-    <Content Include="Views\Investors\Edit.cshtml" />
-    <Content Include="Views\Investors\Index.cshtml" />
     <Content Include="Views\Sales_Person\Create.cshtml" />
     <Content Include="Views\Sales_Person\Delete.cshtml" />
     <Content Include="Views\Sales_Person\Details.cshtml" />
@@ -333,9 +333,19 @@
     <Content Include="Views\到期项目表\Edit.cshtml" />
     <Content Include="Views\到期项目表\Index.cshtml" />
     <Content Include="Views\Fix_Product\BatchContracts.cshtml" />
+    <Content Include="Views\FOF_Contract\Create.cshtml" />
+    <Content Include="Views\FOF_Contract\Delete.cshtml" />
+    <Content Include="Views\FOF_Contract\Details.cshtml" />
+    <Content Include="Views\FOF_Contract\Edit.cshtml" />
+    <Content Include="Views\FOF_Contract\Index.cshtml" />
+    <Content Include="Views\客户兑付明细表\Export.cshtml" />
+    <Content Include="Views\到期项目表\Export.cshtml" />
+    <Content Include="Views\Fix_Contract\Import.cshtml" />
+    <Content Include="Views\Sales_Person\PList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Upload\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

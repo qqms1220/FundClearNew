@@ -1,57 +1,59 @@
-﻿@model IEnumerable<FundClear.Models.客户兑付明细表>
-
+﻿@model PagedList.IPagedList<FundClear.Models.客户兑付明细表>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "客户兑付明细表";
 }
 
-<h2>客户兑付明细表</h2>  
-
-@Html.ActionLink("导出到Excel", "ExportToExcel", null,new { @class = "btn btn-primary btn-sm" })
-
+<h2>客户兑付明细表</h2>
+@using (Html.BeginForm("Index"))
+{
+    <p>
+        按姓名: @Html.TextBox("姓名", ViewBag.姓名过滤器 as string)
+        按分配日期:@Html.TextBox("分配日期",ViewBag.分配日期过滤器 as string)
+        按实际兑付日期:@Html.TextBox("实际兑付日期", ViewBag.实际兑付日期过滤器 as string)
+        按项目批次:@Html.TextBox("项目批次",ViewBag.项目批次过滤器 as string)
+        <input type="submit" value="过滤" />       
+    </p>
+}
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.进账日期)
+            进账日期
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.姓名)
+            姓名
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.金额)
+            金额
+        </th>       
+        <th>
+            起息日期
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.本金归还账户)
+            分配日期
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.分配日期)
+            实际兑付日期
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.收益率)%
+            收益率
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.到期本金)
+            到期本金
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.到期收益)
+            到期收益
+        </th>      
+        <th>
+            购买期限
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.收益分配账户)
-        </th>
+            分配方式
+        </th>       
         <th>
-            @Html.DisplayNameFor(model => model.购买期限)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.分配方式)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.客户入账账户)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.项目批次)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.备注)
-        </th>
+            项目批次
+        </th>      
         <th></th>
     </tr>
 
@@ -65,12 +67,15 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.金额)
-        </td>
+        </td>     
         <td>
-            @Html.DisplayFor(modelItem => item.本金归还账户)
-        </td>
+            @Html.DisplayFor(modelItem => item.起息日期)
+        </td>  
         <td>
             @Html.DisplayFor(modelItem => item.分配日期)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.实际兑付日期)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.收益率 )%
@@ -80,31 +85,25 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.到期收益)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.收益分配账户)
-        </td>
+        </td>        
         <td>
             @Html.DisplayFor(modelItem => item.购买期限)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.分配方式)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.客户入账账户)
-        </td>
+        </td>      
         <td>
             @Html.DisplayFor(modelItem => item.项目批次)
-        </td>
+        </td>       
         <td>
-            @Html.DisplayFor(modelItem => item.备注)
-        </td>
-        <td>
-            @*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |*@
-            @Html.ActionLink("详情", "Details", new { id=item.ID }) 
+            @Html.ActionLink("设定兑付日期", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("详情", "Details", new { id=item.ID })
             @*@Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
         </td>
     </tr>
 }
-
 </table>
+页面 @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, 姓名过滤器 = ViewBag.姓名过滤器, 项目批次过滤器 = ViewBag.项目批次过滤器, 分配日期过滤器 = ViewBag.分配日期过滤器, 实际兑付日期过滤器 = ViewBag.实际兑付日期过滤器 }))

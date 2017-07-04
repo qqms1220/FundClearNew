@@ -13,14 +13,23 @@ namespace FundClear.Controllers
     public class Fix_ProductController : Controller
     {
         private Fund db = new Fund();
-
+        [Authorize]
         // GET: Fix_Product
-        public ActionResult Index()
+        public ActionResult Index(string SearchString)
         {
-            var fix_Product = db.Fix_Product.Include(f => f.Borrower);
+            IQueryable<Fix_Product> fix_Product;
+            if (!string.IsNullOrWhiteSpace(SearchString))
+            {
+                SearchString = SearchString.Replace(" ", "");
+                fix_Product = db.Fix_Product.Include(f => f.Borrower).Where( p => p.产品名称.Contains(SearchString));
+            }
+            else
+            {
+                fix_Product = db.Fix_Product.Include(f => f.Borrower);
+            }      
             return View(fix_Product.ToList());
         }
-
+            [Authorize]
         // GET: Fix_Product/Details/5
         public ActionResult Details(int? id)
         {
@@ -35,7 +44,7 @@ namespace FundClear.Controllers
             }
             return View(fix_Product);
         }
-
+        [Authorize]
         // GET: Fix_Product/ BatchContracts/5
         public ActionResult BatchContracts(int? id)
         {
@@ -50,14 +59,14 @@ namespace FundClear.Controllers
             }           
             return View(fix_Product);
         }
-
+            [Authorize]
         // GET: Fix_Product/Create
         public ActionResult Create()
         {
-            ViewBag.Borrower_id = new SelectList(db.Borrower, "Borrower_id", "借款方名字");
+            ViewBag.Borrower_id = new SelectList(db.Borrower, "Borrower_id", "融资方名字");
             return View();
         }
-
+        [Authorize]
         // POST: Fix_Product/Create
         // 为了防止“过多发布”攻击，请启用要绑定到的特定属性，有关 
         // 详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=317598。
@@ -72,10 +81,10 @@ namespace FundClear.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Borrower_id = new SelectList(db.Borrower, "Borrower_id", "借款方名字", fix_Product.Borrower_id);
+            ViewBag.Borrower_id = new SelectList(db.Borrower, "Borrower_id", "融资方名字", fix_Product.Borrower_id);
             return View(fix_Product);
         }
-
+            [Authorize]
         // GET: Fix_Product/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -88,10 +97,10 @@ namespace FundClear.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Borrower_id = new SelectList(db.Borrower, "Borrower_id", "借款方名字", fix_Product.Borrower_id);
+            ViewBag.Borrower_id = new SelectList(db.Borrower, "Borrower_id", "融资方名字", fix_Product.Borrower_id);
             return View(fix_Product);
         }
-
+        [Authorize]
         // POST: Fix_Product/Edit/5
         // 为了防止“过多发布”攻击，请启用要绑定到的特定属性，有关 
         // 详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=317598。
@@ -105,10 +114,10 @@ namespace FundClear.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Borrower_id = new SelectList(db.Borrower, "Borrower_id", "借款方名字", fix_Product.Borrower_id);
+            ViewBag.Borrower_id = new SelectList(db.Borrower, "Borrower_id", "融资方名字", fix_Product.Borrower_id);
             return View(fix_Product);
         }
-
+            [Authorize]
         // GET: Fix_Product/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -123,7 +132,7 @@ namespace FundClear.Controllers
             }
             return View(fix_Product);
         }
-
+        [Authorize]
         // POST: Fix_Product/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

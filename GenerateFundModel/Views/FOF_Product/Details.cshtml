@@ -1,13 +1,13 @@
 ﻿@model FundClear.Models.FOF_Product
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "详情";
 }
 
-<h2>Details</h2>
+<h2>详情</h2>
 
 <div>
-    <h4>FOF_Product</h4>
+    <h4>FOF产品</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -93,6 +93,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Product_id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("编辑", "Edit", new { id = Model.Product_id }) |
+    @Html.ActionLink("返回列表", "Index")
 </p>

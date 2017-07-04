@@ -1,48 +1,59 @@
-﻿@model IEnumerable<FundClear.Models.到期项目表>
-
+﻿@model PagedList.IPagedList<FundClear.Models.到期项目表>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "到期项目表";
 }
 
 <h2>到期项目表</h2>
-@Html.ActionLink("导出到Excel", "ExportToExcel", null, new { @class = "btn btn-primary btn-sm" })
+@using (Html.BeginForm("Index"))
+{
+    <p>
+        按借款人: @Html.TextBox("借款人",ViewBag.借款人过滤器 as string)
+        还款日期
+        @Html.TextBox("还款日期起始",ViewBag.还款日期起始过滤器 as string) 
+        至
+        @Html.TextBox("还款日期终止",ViewBag.还款日期终止过滤器 as string)
+        按合伙企业:@Html.TextBox("合伙企业",ViewBag.合伙企业过滤器 as string)
+        <input type="submit" value="过滤" />
+    </p>
+}
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.融资方)
+            融资方
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.合伙企业)
+            合伙企业
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.还款日期)
+            还款日期
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.投资金额))(万元)
+            投资金额(万元)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.回款本金)
+            回款本金
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.收益金额)
+            收益金额
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.服务费金额)
+            服务费金额
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.回款金额)
+            回款金额
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.打款日期)
+            打款日期
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.产品期限)
+            产品期限
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.兑付方式)
+            兑付方式
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.本期兑付内容)
+            本期兑付内容
         </th>
         <th></th>
     </tr>
@@ -86,11 +97,14 @@
             @Html.DisplayFor(modelItem => item.本期兑付内容)
         </td>
         <td>
-            @Html.ActionLink("编辑", "Edit", new { id=item.ID }) |
+            @*@Html.ActionLink("编辑", "Edit", new { id=item.ID }) |*@
             @Html.ActionLink("详情", "Details", new { id=item.ID }) 
             @*@Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
         </td>
     </tr>
 }
-
 </table>
+页面 @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, 借款人过滤器 = ViewBag.借款人过滤器, 还款日期起始过滤器 = ViewBag.还款日期起始过滤器, 还款日期终止过滤器 = ViewBag.还款日期终止过滤器, 合伙企业过滤器 = ViewBag.合伙企业过滤器 }))

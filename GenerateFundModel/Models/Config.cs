@@ -7,6 +7,6 @@ namespace FundClear.Models
 {
     public class Config
     {
-        public static int pageSize = 5;
+        public static int pageSize = 8;
     }
 }

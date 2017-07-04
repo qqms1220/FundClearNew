@@ -2,10 +2,90 @@
 
 @{
     ViewBag.Title = "Edit";
+    var PayType = ViewData["PayType"] as string;
 }
 
 <h2>编辑</h2>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#Product_id").change(function () {
+            var ProductOptions = {};
+            ProductOptions.url = "/Fix_Contract/Batches";
+            ProductOptions.type = "POST";
+            ProductOptions.data = JSON.stringify({ Product_ID: $("#Product_id").val() });
+            ProductOptions.datatype = "json";
+            ProductOptions.contentType = "application/json";
+            ProductOptions.success = function (BatchList) {
+                $("#Batch_id").empty();
+                for (var i = 0; i < BatchList.length; i++) {
+                    $("#Batch_id").append("<option value =\"" + BatchList[i].Batch_id + "\">" + BatchList[i].批次名称 + "</option>");
+                }
+            };
+            ProductOptions.error = function () { alert("无法获取到批次信息!!"); };
+            $.ajax(ProductOptions);
+        }
+        )
+    });
 
+    $(document).ready(function () {
+        $("#Branch_id").change(function () {
+            var BranchOptions = {};
+            BranchOptions.url = "/Fix_Contract/Sales_Persons";
+            BranchOptions.type = "POST";
+            BranchOptions.data = JSON.stringify({ Branch_ID: $("#Branch_id").val() });
+            BranchOptions.datatype = "json";
+            BranchOptions.contentType = "application/json";
+            BranchOptions.success = function (SalesList) {
+                $("#Salesperson_id").empty();
+                for (var i = 0; i < SalesList.length; i++) {
+                    $("#Salesperson_id").append("<option value =\"" + SalesList[i].Sales_Person_Id + "\">" + SalesList[i].理财师姓名 + "</option>");
+                }
+            };
+            BranchOptions.error = function () { alert("无法获取到理财师信息!!"); };
+            $.ajax(BranchOptions);
+        }
+        )
+    });
+
+    $(document).ready(function () {
+        if (@Model.存入方式 == 2) {
+            $("#ContractType_Month").hide();
+            $("#ContractType_Day").show();
+        }
+        else {
+            $("#ContractType_Month").show();
+            $("#ContractType_Day").hide();
+        }
+        $("#ContractType").change(function () {
+            if (this.value == "1") {
+                $("#ContractType_Month").show();
+                document.getElementById("txtDay").value = "0";
+                $("#ContractType_Day").hide();
+            }
+            else {
+                $("#ContractType_Month").hide();
+                document.getElementById("txtMon").value = "0";
+                $("#ContractType_Day").show();
+            }
+        })
+
+        if(@PayType==true)
+        {
+            $("#PayDay").show();
+        }
+        else
+        {
+            $("#PayDay").hide();
+        }
+        $("#PType").change(function () {
+            if (this.value == "1")
+                $("#PayDay").show();
+            else
+                $("#PayDay").hide();
+        });
+    });
+</script>
 
 @using (Html.BeginForm())
 {
@@ -26,6 +106,38 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.投资人姓名, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.投资人姓名, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.投资人姓名, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.投资人身份证号, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.投资人身份证号, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.投资人身份证号, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.电话, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.电话, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.电话, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.地址, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.地址, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.地址, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Product_id, "产品", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("Product_id", null, htmlAttributes: new { @class = "form-control" })
@@ -34,20 +146,115 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Batch_id, "产品批次", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Batch_id", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Batch_id, "", new { @class = "text-danger" })
+            </div>
+        </div>        
+
+        <div class="form-group">
             @Html.LabelFor(model => model.金额, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.金额, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.金额, "", new { @class = "text-danger" })
             </div>
+        </div>    
+
+        <div class="form-group">
+            @Html.Label("收益率%", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.收益率, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.收益率, "", new { @class = "text-danger" })
+            </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Investor_id, "投资人", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("存入方式", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Investor_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Investor_id, "", new { @class = "text-danger" })
+                @Html.DropDownList("ContractType", null, htmlAttributes: new { @class = "form-control" })
             </div>
         </div>
+        
+        <div class="form-group" id="ContractType_Month">
+            @Html.LabelFor(model => model.存款月数, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.存款月数, new { htmlAttributes = new { id = "txtMon", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.存款月数, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" id="ContractType_Day">
+            @Html.LabelFor(model => model.存款天数, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.存款天数, new { htmlAttributes = new { id = "txtDay", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.存款天数, "", new { @class = "text-danger" })
+            </div>
+        </div>  
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.付息方式, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.付息方式, htmlAttributes: new { id = "PType", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.付息方式, "", new { @class = "text-danger" })
+            </div>
+        </div>      
+        
+        <div class="form-group" id="PayDay">
+            @Html.LabelFor(model => model.付息日, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.付息日, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.付息日, "", new { @class = "text-danger" })
+            </div>
+        </div>   
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.本金开户银行, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.本金开户银行, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.本金开户银行, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.本金账户名, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.本金账户名, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.本金账户名, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.本金银行账号, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.本金银行账号, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.本金银行账号, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.收益开户银行, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.收益开户银行, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.收益开户银行, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.收益账户名, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.收益账户名, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.收益账户名, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.收益银行账号, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.收益银行账号, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.收益银行账号, "", new { @class = "text-danger" })
+            </div>
+        </div> 
 
         <div class="form-group">
             @Html.LabelFor(model => model.Branch_id, "分公司", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -63,15 +270,7 @@
                 @Html.DropDownList("Salesperson_id", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Salesperson_id, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("收益率%", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.收益率, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.收益率, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        </div>               
 
         <div class="form-group">
             @Html.LabelFor(model => model.购买日期, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -82,20 +281,20 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.计息日期, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.计息日期, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.计息日期, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.成立日期, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.成立日期, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.成立日期, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Batch_id, "产品批次", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Batch_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Batch_id, "", new { @class = "text-danger" })
-            </div>
-        </div>        
+        </div>      
               
         <div class="form-group">
             @Html.LabelFor(model => model.合同状态, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -114,7 +313,18 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.已清算, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.已清算)
+                    @Html.ValidationMessageFor(model => model.已清算, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
+                <input type="hidden" value= @ViewBag.backurl  />
                 <input type="submit" value="保存" class="btn btn-default" />
             </div>
         </div>
@@ -124,7 +334,6 @@
 <div>
     @Html.ActionLink("返回列表", "Index")
 </div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

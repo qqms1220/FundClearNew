@@ -18,8 +18,7 @@
         public virtual DbSet<Fix_Prod_Batch_running> Fix_Prod_Batch_running { get; set; }
         public virtual DbSet<Fix_Product> Fix_Product { get; set; }        
         public virtual DbSet<FOF_Contract> FOF_Contract { get; set; }
-        public virtual DbSet<FOF_Product> FOF_Product { get; set; }
-        public virtual DbSet<Investor> Investor { get; set; }
+        public virtual DbSet<FOF_Product> FOF_Product { get; set; }       
         public virtual DbSet<Sales_Branch> Sales_Branch { get; set; }
         public virtual DbSet<Sales_Person> Sales_Person { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
@@ -41,6 +40,10 @@
                 .HasPrecision(18, 4);
 
             modelBuilder.Entity<Fix_Prod_Batch>()
+               .Property(e => e.已付收益)
+               .HasPrecision(18, 4);
+
+            modelBuilder.Entity<Fix_Prod_Batch>()
                 .HasMany(e => e.Fix_Contract)
                 .WithRequired(e => e.Fix_Prod_Batch)
                 .WillCascadeOnDelete(false);          
@@ -56,12 +59,7 @@
 
             modelBuilder.Entity<FOF_Product>()
                 .Property(e => e.最低认购金额)
-                .HasPrecision(18, 0);
-
-            modelBuilder.Entity<Investor>()
-                .HasMany(e => e.Fix_Contract)
-                .WithRequired(e => e.Investor)
-                .WillCascadeOnDelete(false);
+                .HasPrecision(18, 0);           
 
             modelBuilder.Entity<Sales_Person>()
                 .HasMany(e => e.Fix_Contract)
@@ -83,23 +81,23 @@
 
             modelBuilder.Entity<到期项目表>()
                .Property(e => e.投资金额)
-               .HasPrecision(18, 0);
+               .HasPrecision(18, 2);
 
             modelBuilder.Entity<到期项目表>()
                 .Property(e => e.回款本金)
-                .HasPrecision(18, 0);
+                .HasPrecision(18, 2);
 
             modelBuilder.Entity<到期项目表>()
                 .Property(e => e.收益金额)
-                .HasPrecision(18, 0);
+                .HasPrecision(18, 2);
 
             modelBuilder.Entity<到期项目表>()
                 .Property(e => e.服务费金额)
-                .HasPrecision(18, 0);
+                .HasPrecision(18, 2);
 
             modelBuilder.Entity<到期项目表>()
                 .Property(e => e.回款金额)
-                .HasPrecision(18, 0);
+                .HasPrecision(18, 2);
 
             modelBuilder.Entity<客户兑付明细表>()
                 .Property(e => e.金额)
@@ -108,6 +106,14 @@
             modelBuilder.Entity<客户兑付明细表>()
                 .Property(e => e.到期本金)
                 .HasPrecision(18, 0);
+
+            modelBuilder.Entity<客户兑付明细表>()
+               .Property(e => e.到期收益)
+               .HasPrecision(18, 2);
+
+            modelBuilder.Entity<客户兑付明细表>()
+                .Property(e => e.收益率)
+                .HasPrecision(18, 2);
         }
     }
 }

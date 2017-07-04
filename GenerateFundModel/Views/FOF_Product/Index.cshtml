@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<FundClear.Models.FOF_Product>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "FOF产品列表";
 }
 
 <h2>FOF类产品</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("新建", "Create")
 </p>
 <table class="table">
     <tr>
@@ -77,9 +77,9 @@
             @Html.DisplayFor(modelItem => item.认购费率)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Product_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Product_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Product_id })
+            @Html.ActionLink("编辑", "Edit", new { id=item.Product_id }) |
+            @Html.ActionLink("详情", "Details", new { id=item.Product_id }) |
+            @Html.ActionLink("删除", "Delete", new { id=item.Product_id })
         </td>
     </tr>
 }

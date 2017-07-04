@@ -51,6 +51,14 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.服务费率)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.服务费率)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.付息方式)
         </dt>
 
@@ -101,6 +109,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Batch_id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("编辑", "Edit", new { id = Model.Batch_id }) |
+    @Html.ActionLink("返回列表", "Index")
 </p>

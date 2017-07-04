@@ -13,14 +13,25 @@ namespace FundClear.Controllers
     public class Sales_PersonController : Controller
     {
         private Fund db = new Fund();
-
+        [Authorize]
         // GET: Sales_Person
-        public ActionResult Index()
+        public ActionResult Index(int? SelectedBranch, string searchString)
         {
             var sales_Person = db.Sales_Person.Include(s => s.Sales_Branch);
+            var branches = db.Sales_Branch.OrderByDescending(b => b.分公司名称).ToList();
+            ViewBag.SelectedBranch = new SelectList(branches, "Branch_id", "分公司名称", SelectedBranch);
+            int branch_id = SelectedBranch.GetValueOrDefault();
+
+            sales_Person = sales_Person.Where(s => !SelectedBranch.HasValue || s.Branch_Id == branch_id)
+                .OrderByDescending(d => d.Sales_Person_Id);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                sales_Person = sales_Person.Where(s => s.理财师姓名.Contains(searchString));
+            }           
             return View(sales_Person.ToList());
         }
-
+        [Authorize]
         // GET: Sales_Person/Details/5
         public ActionResult Details(int? id)
         {
@@ -35,14 +46,14 @@ namespace FundClear.Controllers
             }
             return View(sales_Person);
         }
-
+        [Authorize]
         // GET: Sales_Person/Create
         public ActionResult Create()
         {
             ViewBag.Branch_Id = new SelectList(db.Sales_Branch, "Branch_id", "分公司名称");
             return View();
         }
-
+        [Authorize]
         // POST: Sales_Person/Create
         // 为了防止“过多发布”攻击，请启用要绑定到的特定属性，有关 
         // 详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=317598。
@@ -60,7 +71,7 @@ namespace FundClear.Controllers
             ViewBag.Branch_Id = new SelectList(db.Sales_Branch, "Branch_id", "分公司名称", sales_Person.Branch_Id);
             return View(sales_Person);
         }
-
+        [Authorize]
         // GET: Sales_Person/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -76,7 +87,7 @@ namespace FundClear.Controllers
             ViewBag.Branch_Id = new SelectList(db.Sales_Branch, "Branch_id", "分公司名称", sales_Person.Branch_Id);
             return View(sales_Person);
         }
-
+        [Authorize]
         // POST: Sales_Person/Edit/5
         // 为了防止“过多发布”攻击，请启用要绑定到的特定属性，有关 
         // 详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=317598。
@@ -93,7 +104,7 @@ namespace FundClear.Controllers
             ViewBag.Branch_Id = new SelectList(db.Sales_Branch, "Branch_id", "分公司名称", sales_Person.Branch_Id);
             return View(sales_Person);
         }
-
+        [Authorize]
         // GET: Sales_Person/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -108,7 +119,7 @@ namespace FundClear.Controllers
             }
             return View(sales_Person);
         }
-
+        [Authorize]
         // POST: Sales_Person/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -119,7 +130,7 @@ namespace FundClear.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        [Authorize]
         protected override void Dispose(bool disposing)
         {
             if (disposing)

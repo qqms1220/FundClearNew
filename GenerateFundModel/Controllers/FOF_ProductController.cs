@@ -10,6 +10,7 @@ using FundClear.Models;
 
 namespace FundClear.Controllers
 {
+    [Authorize]
     public class FOF_ProductController : Controller
     {
         private Fund db = new Fund();

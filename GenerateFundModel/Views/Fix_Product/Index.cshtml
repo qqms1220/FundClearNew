@@ -9,10 +9,17 @@
 <p>
     @Html.ActionLink("新建", "Create")
 </p>
+@using (Html.BeginForm("Index"))
+{
+    <p>
+        按产品名称筛选: @Html.TextBox("SearchString", null)
+        <input type="submit" value="查找" />
+    </p>
+}
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Borrower.借款方名字)
+            @Html.DisplayNameFor(model => model.Borrower.融资方名字)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.产品名称)
@@ -25,10 +32,7 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.募集规模)
-        </th>          
-        <th>
-            @Html.DisplayNameFor(model => model.服务费率)%
-        </th>
+        </th> 
         <th>
             @Html.DisplayNameFor(model => model.付息方式)
         </th>
@@ -41,7 +45,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Borrower.借款方名字)
+            @Html.DisplayFor(modelItem => item.Borrower.融资方名字)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.产品名称)
@@ -54,10 +58,7 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.募集规模)
-        </td>        
-        <td>
-            @Html.DisplayFor(modelItem => item.服务费率)%
-        </td>
+        </td> 
         <td>
             @Html.DisplayFor(modelItem => item.付息方式)
         </td>

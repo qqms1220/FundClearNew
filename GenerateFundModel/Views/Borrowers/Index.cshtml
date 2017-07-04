@@ -11,7 +11,7 @@
 <p>
     @Html.ActionLink("新建", "Create")
 </p>
-@using (Html.BeginForm("Index", "Borrowers", FormMethod.Get))
+@using (Html.BeginForm("Index", "Borrowers", FormMethod.Post))
 {
     <p>
         按名称查找: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string) 
@@ -24,13 +24,13 @@
             @Html.ActionLink("融资方名称", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            开户行
+            电话
         </th>
         <th>
-            银行户名
+            电邮
         </th>
         <th>
-            银行账号
+            地址
         </th>
        
         <th></th>
@@ -41,16 +41,16 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.借款方名字)
+                @Html.DisplayFor(modelItem => item.融资方名字)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.借款方开户银行)
+                @Html.DisplayFor(modelItem => item.融资方电话)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.借款方账户名)
+                @Html.DisplayFor(modelItem => item.融资方电邮)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.借款方银行账号)
+                @Html.DisplayFor(modelItem => item.融资方地址)
             </td>
            
             <td>

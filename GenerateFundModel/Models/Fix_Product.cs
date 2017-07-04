@@ -54,7 +54,7 @@ namespace FundClear.Models
         public decimal 服务费率 { get; set; }
         public 付息方式 付息方式 { get; set; }
 
-        [Range(1,31)]
+        [Range(1,28)]
         public int 付息日 { get; set; }
 
         public int Borrower_id { get; set; }

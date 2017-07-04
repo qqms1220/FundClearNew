@@ -13,13 +13,24 @@ namespace FundClear.Controllers
     public class Sales_BranchController : Controller
     {
         private Fund db = new Fund();
-
+        [Authorize]
         // GET: Sales_Branch
-        public ActionResult Index()
+        public ActionResult Index(string SearchString)
         {
-            return View(db.Sales_Branch.ToList());
-        }
+            IQueryable<Sales_Branch> sales_Branches;
+            if (!string.IsNullOrWhiteSpace(SearchString))
+            {
+                SearchString = SearchString.Replace(" ", "");
+                sales_Branches = db.Sales_Branch.Where(b => b.分公司名称.Contains(SearchString));
+            }
+            else
+            {
+                sales_Branches = db.Sales_Branch;
+            }         
 
+            return View(sales_Branches.ToList());
+        }
+        [Authorize]
         // GET: Sales_Branch/Details/5
         public ActionResult Details(int? id)
         {
@@ -34,13 +45,13 @@ namespace FundClear.Controllers
             }
             return View(sales_Branch);
         }
-
+        [Authorize]
         // GET: Sales_Branch/Create
         public ActionResult Create()
         {
             return View();
         }
-
+        [Authorize]
         // POST: Sales_Branch/Create
         // 为了防止“过多发布”攻击，请启用要绑定到的特定属性，有关 
         // 详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=317598。
@@ -57,7 +68,7 @@ namespace FundClear.Controllers
 
             return View(sales_Branch);
         }
-
+        [Authorize]
         // GET: Sales_Branch/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -72,7 +83,7 @@ namespace FundClear.Controllers
             }
             return View(sales_Branch);
         }
-
+        [Authorize]
         // POST: Sales_Branch/Edit/5
         // 为了防止“过多发布”攻击，请启用要绑定到的特定属性，有关 
         // 详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=317598。
@@ -88,7 +99,7 @@ namespace FundClear.Controllers
             }
             return View(sales_Branch);
         }
-
+        [Authorize]
         // GET: Sales_Branch/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -103,7 +114,7 @@ namespace FundClear.Controllers
             }
             return View(sales_Branch);
         }
-
+        [Authorize]
         // POST: Sales_Branch/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

@@ -27,8 +27,12 @@ namespace FundClear.Models
         public decimal? 批次金额 { get; set; }
 
         [Required]
-        [Range(0.01,100.00)]
+        [Range(0.00,100.00)]
         public decimal 批次收益率 { get; set; }
+
+        [Required]
+        [Range(0.00, 100.00)]
+        public decimal? 服务费率 { get; set; }
 
         [StringLength(50)]
         public string 批次创建人 { get; set; }
@@ -52,7 +56,8 @@ namespace FundClear.Models
 
         public int? Product_id { get; set; }
 
-        public 产品批次状态 产品批次状态 { get; set; }    
+        public 产品批次状态 产品批次状态 { get; set; }
+        public bool? 已清算 { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Fix_Contract> Fix_Contract { get; set; }

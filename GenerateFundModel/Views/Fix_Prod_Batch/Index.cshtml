@@ -1,4 +1,6 @@
-﻿@model IEnumerable<FundClear.Models.Fix_Prod_Batch>
+﻿@model PagedList.IPagedList<FundClear.Models.Fix_Prod_Batch>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "产品批次列表";
@@ -14,34 +16,38 @@
     <p>
         选择产品:
          @Html.DropDownList("SelectedProduct", "所有")     
+         @Html.DropDownList("product_batch_status", "所有")        
         <input type="submit" value="筛选" />
     </p>
 }
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.产品批次状态)
+            产品批次状态
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Fix_Product.产品名称)
+            产品名称
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.批次名称)
+            批次名称
         </th>
         <th>
             批次已募集金额
         </th>      
         <th>
-            @Html.DisplayNameFor(model => model.批次收益率)
+            批次收益率
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.付息方式)
+            服务费率
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.划款日期)
+            付息方式
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.到期日期)
+            划款日期
+        </th>
+        <th>
+            到期日期
         </th>
         <th></th>
     </tr>
@@ -64,6 +70,9 @@
             @Html.DisplayFor(modelItem => item.批次收益率)%
         </td>   
         <td>
+            @Html.DisplayFor(modelItem => item.服务费率)%
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.付息方式)
         </td>   
         <td>
@@ -80,5 +89,8 @@
         </td>
     </tr>
 }
-
 </table>
+页面 @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, productFilter = ViewBag.productFilter, batchStatusFilter = ViewBag.batchStatusFilter }))

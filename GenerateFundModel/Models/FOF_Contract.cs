@@ -17,9 +17,7 @@ namespace FundClear.Models
 
         public int? 购买份额 { get; set; }
 
-        public decimal? 赎回金额 { get; set; }
-
-        public int? Investor_id { get; set; }
+        public decimal? 赎回金额 { get; set; }      
 
         [StringLength(50)]
         public string 投资人姓名 { get; set; }
@@ -55,8 +53,6 @@ namespace FundClear.Models
         public 合同状态 合同状态 { get; set; }       
 
         public virtual FOF_Product FOF_Product { get; set; }
-
-        public virtual Investor Investor { get; set; }
 
         public virtual Sales_Branch Sales_Branch { get; set; }
 

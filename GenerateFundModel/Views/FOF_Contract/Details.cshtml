@@ -1,37 +1,21 @@
 ﻿@model FundClear.Models.FOF_Contract
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "FOF合同详情";
 }
 
-<h2>Details</h2>
+<h2>详情</h2>
 
 <div>
-    <h4>FOF_Contract</h4>
+    <h4>FOF合同</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.合同状态)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.合同状态)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.FOF_Product.产品名称)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.FOF_Product.产品名称)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Investor.姓名)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Investor.姓名)
         </dd>
 
         <dt>
@@ -123,7 +107,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Input_person_id)
+            录入人
         </dt>
 
         <dd>
@@ -139,7 +123,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Audit_person_id)
+           审核人
         </dt>
 
         <dd>
@@ -154,9 +138,17 @@
             @Html.DisplayFor(model => model.审核时间)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.合同状态)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.合同状态)
+        </dd>
+
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Contract_id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("编辑", "Edit", new { id = Model.Contract_id }) |
+    @Html.ActionLink("返回列表", "Index")
 </p>

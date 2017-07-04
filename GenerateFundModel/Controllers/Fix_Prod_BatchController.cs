@@ -7,40 +7,50 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FundClear.Models;
+using PagedList;
 
 namespace FundClear.Controllers
 {
     public class Fix_Prod_BatchController : Controller
     {
         private Fund db = new Fund();
-
+        [Authorize]
         // GET: Fix_Prod_Batch
-        public ActionResult Index(int? SelectedProduct)
+        public ActionResult Index(int? productFilter, int?batchStatusFilter, int? SelectedProduct, int? product_batch_status,int? page)
         { 
-            var fix_Prod_Batch = db.Fix_Prod_Batch.Include(f => f.Fix_Product).Include( c => c.Fix_Contract);
-
-            //统计该批次的有效合同金额的合计
-            foreach(var batch in fix_Prod_Batch)
-            {
-                decimal batch_total = batch.Fix_Contract.Where(c => c.合同状态 == 合同状态.生效).Sum(c => c.金额);
-                if ( batch_total != batch.批次金额)
-                {
-                    batch.批次金额 = batch_total;
-                    db.Entry(batch).State = EntityState.Modified;                   
-                }
-            }
-            db.SaveChanges();
+            if(SelectedProduct != null) { page = 1; } else { SelectedProduct = productFilter; }
+            if(product_batch_status != null) { page = 1; } else { product_batch_status = batchStatusFilter; }
 
             var products = db.Fix_Product.OrderByDescending(p => p.Product_id).ToList();
             ViewBag.SelectedProduct = new SelectList(products, "Product_id", "产品名称", SelectedProduct);
-            int productID = SelectedProduct.GetValueOrDefault();
 
-            fix_Prod_Batch = fix_Prod_Batch.Where(b => !SelectedProduct.HasValue || b.Product_id == productID)              
-                .OrderByDescending(d => d.Batch_id);                
+            Dictionary<string, int> status = new Dictionary<string, int>();
+            string[] enum_keys = Enum.GetNames(typeof(产品批次状态));
+            int[] enum_values = (int[])Enum.GetValues(typeof(产品批次状态));
+            for (int i = 0; i < enum_keys.Length; i++)
+            {
+                status.Add(enum_keys[i], enum_values[i]);
+            }
+            ViewBag.product_batch_status = new SelectList(status, "value", "key", product_batch_status);
 
-            return View(fix_Prod_Batch.ToList());
+            ViewBag.productFilter = SelectedProduct;
+            ViewBag.batchStatusFilter = product_batch_status;
+
+            var fix_Prod_Batch = db.Fix_Prod_Batch.Include(f => f.Fix_Product).Include(c => c.Fix_Contract);
+            if (SelectedProduct != null)
+            {
+                fix_Prod_Batch = fix_Prod_Batch.Where(b => b.Product_id == SelectedProduct);
+            }
+            if (product_batch_status != null)
+            {
+                fix_Prod_Batch = fix_Prod_Batch.Where(c => c.产品批次状态 == (产品批次状态)product_batch_status);
+            }
+           
+
+            int pageNumber = (page ?? 1);
+            return View(fix_Prod_Batch.OrderByDescending(d => d.Batch_id).ToPagedList(pageNumber, Config.pageSize));
         }
-
+        [Authorize]
         // GET: Fix_Prod_Batch
         public ActionResult BatchContractList(int? BatchID)
         {
@@ -55,7 +65,7 @@ namespace FundClear.Controllers
             }
             return View(Batch_Contract_List.ToList());
         }
-
+        [Authorize]
         // GET: Fix_Prod_Batch/Details/5
         public ActionResult Details(int? id)
         {
@@ -77,13 +87,13 @@ namespace FundClear.Controllers
             ViewBag.Product_id = new SelectList(db.Fix_Product, "Product_id", "产品名称");
             return View();
         }
-
+        [Authorize]
         // POST: Fix_Prod_Batch/Create
         // 为了防止“过多发布”攻击，请启用要绑定到的特定属性，有关 
         // 详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Batch_id,批次名称,Product_id,批次收益率,付息方式,季末付息日,产品批次状态, 划款日期")] Fix_Prod_Batch fix_Prod_Batch)
+        public ActionResult Create([Bind(Include = "Batch_id,批次名称,Product_id,批次金额,批次收益率,服务费率,付息方式,季末付息日,产品批次状态, 划款日期")] Fix_Prod_Batch fix_Prod_Batch)
         {
             if (ModelState.IsValid)
             {
@@ -107,17 +117,19 @@ namespace FundClear.Controllers
                 }
 
                 fix_Prod_Batch.批次创建时间 = DateTime.Now;
-              
-           
-                db.Fix_Prod_Batch.Add(fix_Prod_Batch);
-                db.SaveChanges();
+                fix_Prod_Batch.已付收益 = 0;
+
+                
+                 db.Fix_Prod_Batch.Add(fix_Prod_Batch);
+                 db.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
      
             ViewBag.Product_id = new SelectList(db.Fix_Product, "Product_id", "产品名称", fix_Prod_Batch.Product_id);
             return View(fix_Prod_Batch);
         }
-
+        [Authorize]
         // GET: Fix_Prod_Batch/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -134,13 +146,13 @@ namespace FundClear.Controllers
             ViewBag.Product_id = new SelectList(db.Fix_Product, "Product_id", "产品名称", fix_Prod_Batch.Product_id);
             return View(fix_Prod_Batch);
         }
-
+        [Authorize]
         // POST: Fix_Prod_Batch/Edit/5
         // 为了防止“过多发布”攻击，请启用要绑定到的特定属性，有关 
         // 详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Batch_id,批次名称,批次创建时间,Product_id,批次收益率,付息方式,季末付息日,产品批次状态,划款日期")] Fix_Prod_Batch fix_Prod_Batch)
+        public ActionResult Edit([Bind(Include = "Batch_id,批次名称,批次创建时间,Product_id,批次金额,批次收益率,服务费率,已付收益,付息方式,季末付息日,产品批次状态,划款日期,已清算")] Fix_Prod_Batch fix_Prod_Batch)
         {
             if (ModelState.IsValid)
             {
@@ -164,7 +176,7 @@ namespace FundClear.Controllers
                     fix_Prod_Batch.批次创建人 = User.Identity.Name;
                 }
 
-                fix_Prod_Batch.批次创建时间 = DateTime.Now;
+                fix_Prod_Batch.批次创建时间 = DateTime.Now;               
 
                 db.Entry(fix_Prod_Batch).State = EntityState.Modified;
                 db.SaveChanges();
@@ -174,7 +186,7 @@ namespace FundClear.Controllers
             ViewBag.Product_id = new SelectList(db.Fix_Product, "Product_id", "产品名称", fix_Prod_Batch.Product_id);
             return View(fix_Prod_Batch);
         }
-
+        [Authorize]
         // GET: Fix_Prod_Batch/Delete/5
         public ActionResult Delete(int? id)
         {

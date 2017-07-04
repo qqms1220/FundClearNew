@@ -1,10 +1,10 @@
 ﻿@model FundClear.Models.客户兑付明细表
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "设定实际兑付日期";
 }
 
-<h2>Edit</h2>
+<h2>标记实际兑付日期</h2>
 
 
 @using (Html.BeginForm())
@@ -12,133 +12,195 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>客户兑付明细表</h4>
+        <h4>客户兑付记录</h4>
         <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.进账日期)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.进账日期)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.姓名)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.姓名)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.金额)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.金额)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.本金开户行)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.本金开户行)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.本金户名)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.本金户名)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.本金账号)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.本金账号)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.分配日期)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.分配日期)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.收益率)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.收益率)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.到期本金)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.到期本金)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.到期收益)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.到期收益)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.收益开户行)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.收益开户行)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.收益户名)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.收益户名)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.收益账号)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.收益账号)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.购买期限)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.购买期限)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.分配方式)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.分配方式)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.客户入账账户)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.客户入账账户)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.项目批次)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.项目批次)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.备注)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.备注)
+            </dd>
+
+        </dl>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.实际兑付日期, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.实际兑付日期, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.实际兑付日期, "", new { @class = "text-danger" })
+            </div>
+        </div>      
+        
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.进账日期, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.进账日期, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.进账日期, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.姓名, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.姓名, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.姓名, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.金额, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.金额, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.金额, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.本金归还账户, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.本金归还账户, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.本金归还账户, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.分配日期, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.分配日期, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.分配日期, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.收益率, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.收益率, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.收益率, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.到期本金, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.到期本金, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.到期本金, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.到期收益, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.到期收益, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.到期收益, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.收益分配账户, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.收益分配账户, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.收益分配账户, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.购买期限, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.购买期限, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.购买期限, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.分配方式, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.分配方式, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.分配方式, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.客户入账账户, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.客户入账账户, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.客户入账账户, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.项目批次, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.项目批次, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.项目批次, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.备注, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.备注, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.备注, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @Html.HiddenFor(model => model.ID) 
+        @Html.HiddenFor(model => model.进账日期)
+        @Html.HiddenFor(model => model.姓名)       
+        @Html.HiddenFor(model => model.金额) 
+        @Html.HiddenFor(model => model.本金开户行)
+        @Html.HiddenFor(model => model.本金账号)
+        @Html.HiddenFor(model => model.本金户名)
+        @Html.HiddenFor(model => model.收益开户行)
+        @Html.HiddenFor(model => model.收益户名)
+        @Html.HiddenFor(model => model.收益账号)  
+        @Html.HiddenFor(model => model.起息日期)
+        @Html.HiddenFor(model => model.分配日期)
+        @Html.HiddenFor(model => model.收益率)
+        @Html.HiddenFor(model => model.到期本金)
+        @Html.HiddenFor(model => model.到期收益)
+        @Html.HiddenFor(model => model.购买期限)
+        @Html.HiddenFor(model => model.分配方式)
+        @Html.HiddenFor(model => model.客户入账账户)
+        @Html.HiddenFor(model => model.项目批次)
+        @Html.HiddenFor(model => model.备注)
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="保存" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("返回列表", "Index")
 </div>
 
 @section Scripts {
