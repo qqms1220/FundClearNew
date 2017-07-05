@@ -66,14 +66,18 @@
             if (this.value == "1") {
                 $("#ContractType_Month").show();
                 $("#ContractType_Day").hide();
+                document.getElementById("PType").selectedIndex = 2;
             }
             else {
                 $("#ContractType_Month").hide();
                 document.getElementById("txtMon").value = "0";
                 $("#ContractType_Day").show();
+                document.getElementById("PType").selectedIndex = 3;
+                $("#PayDay").hide();
+                document.getElementById("txtPayDay").value = "0";
             }
         })
-
+        document.getElementById("PType").selectedIndex = 2;
         $("#PType").change(function () {
             if (this.value == "1") {
                 document.getElementById("txtPayDay").value = "20";
