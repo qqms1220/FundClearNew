@@ -52,7 +52,7 @@
 
     $(document).ready(function () {
         document.getElementById("txtMon").value = "0";
-        if ($("#ContractType").value == "2")
+        if ($("#ContractType").value == "1")
         {
             $("#ContractType_Month").hide();
             $("#ContractType_Day").show();            
@@ -63,21 +63,23 @@
             $("#ContractType_Day").hide();
         }
         $("#ContractType").change(function () {            
-            if (this.value == "1") {
+            if (this.value == "0") {
                 $("#ContractType_Month").show();
                 $("#ContractType_Day").hide();
-                document.getElementById("PType").selectedIndex = 2;
+                $("#PayDay").show();
+                document.getElementById("PType").selectedIndex = 1;
+                document.getElementById("txtPayDay").value = "20";
             }
             else {
                 $("#ContractType_Month").hide();
                 document.getElementById("txtMon").value = "0";
                 $("#ContractType_Day").show();
-                document.getElementById("PType").selectedIndex = 3;
+                document.getElementById("PType").selectedIndex = 2;
                 $("#PayDay").hide();
                 document.getElementById("txtPayDay").value = "0";
             }
         })
-        document.getElementById("PType").selectedIndex = 2;
+        document.getElementById("PType").selectedIndex = 1;
         document.getElementById("txtPayDay").value = "20";
         $("#PType").change(function () {
             if (this.value == "1") {
@@ -88,6 +90,35 @@
                 document.getElementById("txtPayDay").value = "0";
                 $("#PayDay").hide();
             }
+        });
+
+        $("#txtCard").blur(function () {
+            var card = $("#txtCard").val();
+            if (card.trim().length == 0)
+                return;
+            $.ajax({
+                url: "/Fix_Contract/getUserDetails?CardID=" + card,
+                type: "get",
+                datatype: "json",
+                success: function (data) {
+                    if (data != null) {
+                        document.getElementById("UserName").value = data.UserName;
+                        document.getElementById("Phone").value = data.Phone;
+                        document.getElementById("Address").value = data.Address;
+                        document.getElementById("BJKHYH").value = data.BJKHYH;
+                        document.getElementById("BJZHM").value = data.BJZHM;
+                        document.getElementById("BJYHZH").value = data.BJYHZH;
+                        document.getElementById("SYKHYH").value = data.SYKHYH;
+                        document.getElementById("SYZHM").value = data.SYZHM;
+                        document.getElementById("SYYHZH").value = data.SYYHZH;
+                        //document.getElementById("Branch_id").value = data.Branch_id;
+                        //document.getElementById("Salesperson_id").value = data.Salesperson_id;
+                    }
+                },
+                error: function (msg) {
+                    //alert(msg.responseText);
+                }
+            })
         });
     });
 </script>
@@ -109,25 +140,25 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.投资人姓名, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.投资人姓名, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.投资人姓名, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.投资人身份证号, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.投资人身份证号, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.投资人身份证号, new { htmlAttributes = new { id="txtCard", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.投资人身份证号, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.投资人姓名, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.投资人姓名, new { htmlAttributes = new { id="UserName", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.投资人姓名, "", new { @class = "text-danger" })
+            </div>
+        </div>        
+
+        <div class="form-group">
             @Html.LabelFor(model => model.电话, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.电话, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.电话, new { htmlAttributes = new { id="Phone", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.电话, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -135,7 +166,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.地址, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.地址, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.地址, new { htmlAttributes = new { id="Address", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.地址, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -213,7 +244,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.本金开户银行, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.本金开户银行, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.本金开户银行, new { htmlAttributes = new { id = "BJKHYH", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.本金开户银行, "", new { @class = "text-danger" })
             </div>
         </div> 
@@ -221,7 +252,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.本金账户名, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.本金账户名, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.本金账户名, new { htmlAttributes = new { id = "BJZHM", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.本金账户名, "", new { @class = "text-danger" })
             </div>
         </div> 
@@ -229,7 +260,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.本金银行账号, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.本金银行账号, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.本金银行账号, new { htmlAttributes = new { id = "BJYHZH", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.本金银行账号, "", new { @class = "text-danger" })
             </div>
         </div> 
@@ -237,7 +268,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.收益开户银行, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.收益开户银行, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.收益开户银行, new { htmlAttributes = new { id = "SYKHYH", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.收益开户银行, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -245,7 +276,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.收益账户名, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.收益账户名, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.收益账户名, new { htmlAttributes = new { id = "SYZHM", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.收益账户名, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -253,7 +284,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.收益银行账号, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.收益银行账号, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.收益银行账号, new { htmlAttributes = new { id = "SYYHZH", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.收益银行账号, "", new { @class = "text-danger" })
             </div>
         </div> 
@@ -261,7 +292,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Branch_id, "分公司", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Branch_id", null, "请选择分公司",htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("Branch_id", null, "请选择分公司", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Branch_id, "", new { @class = "text-danger" })
             </div>
         </div>

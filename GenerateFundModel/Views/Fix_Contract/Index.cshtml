@@ -1,105 +1,120 @@
 ﻿@model PagedList.IPagedList<FundClear.Models.Fix_Contract>
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    $(document).ready(function(){
+    $("#btnSubmit").click(function () {
+        var strFilter = "";        
+        if ($("#name").val().trim() != "")
+            strFilter += "&name=" + escape($("#name").val());
+        if ($("#product").val().trim() != "")
+            strFilter += "&product=" + $("#product").val();
+        if (document.getElementById("contract_status").value != "")
+            strFilter += "&contract_status=" + document.getElementById("contract_status").value;
+        location.href = "/Fix_Contract?page=1" + strFilter;
+    });
+    })
+</script>
 @{
     ViewBag.Title = "固定收益类合同列表";
 }
 
-<h2>固收类合同列表</h2>
+    <h2>固收类合同列表</h2>
 
-<p>
-    @Html.ActionLink("新建", "Create") @Html.ActionLink("导入", "Import")
-    
-</p>
-@using (Html.BeginForm("Index"))
-{
     <p>
-        按姓名: @Html.TextBox("name", ViewBag.nameFilter as string)
-        按产品名称: @Html.TextBox("product",ViewBag.productFilter as string)           
-        @Html.DropDownList("contract_status", "所有")
-        <input type="submit" value="过滤" />
+        @Html.ActionLink("新建", "Create") @Html.ActionLink("导入", "Import")
+
     </p>
-}
-<table class="table">
-    <tr>
-        <th>
-           合同状态
-        </th>
-        <th>
-            投资人姓名
-        </th>
-        <th>
-           金额
-        </th>
-        <th>
-            产品名称
-        </th>
-        <th>
-            收益率%
-        </th>
-        <th>
-            付息方式
-        </th>
-        <th>
-            购买日期
-        </th>
-        <th>
-            计息日期
-        </th>
-        <th>
-           成立日期
-        </th>
-        <th>
-            到期日期
-        </th>
-        <th></th>
-    </tr>
+    @using (Html.BeginForm("Index"))
+    {
+        <p>
+            按姓名: @Html.TextBox("name", ViewBag.nameFilter as string)
+            按产品名称: @Html.TextBox("product", ViewBag.productFilter as string)
+            @Html.DropDownList("contract_status", "所有")
+            <input type="button" id="btnSubmit" value="过滤" />
+        </p>
+    }
+    <table class="table">
+        <tr>
+            <th>
+                合同状态
+            </th>
+            <th>
+                投资人姓名
+            </th>
+            <th>
+                金额
+            </th>
+            <th>
+                产品名称
+            </th>
+            <th>
+                收益率%
+            </th>
+            <th>
+                付息方式
+            </th>
+            <th>
+                购买日期
+            </th>
+            <th>
+                计息日期
+            </th>
+            <th>
+                成立日期
+            </th>
+            <th>
+                到期日期
+            </th>
+            <th></th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.合同状态)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.投资人姓名)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.金额)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Fix_Product.产品名称)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.收益率)%
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.付息方式)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.购买日期)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.计息日期)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.成立日期)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.到期日期)
-        </td>
-        <td>
-            @Html.ActionLink("编辑", "Edit", new { id=item.Contract_id}) |
-            @Html.ActionLink("详情", "Details", new { id=item.Contract_id }) |
-            @Html.ActionLink("删除", "Delete", new { id=item.Contract_id }) |
-            @Html.ActionLink("流水", "Running", new { id = item.Contract_id })
-        </td>
-    </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.合同状态)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.投资人姓名)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.金额)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fix_Product.产品名称)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.收益率)%
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.付息方式)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.购买日期)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.计息日期)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.成立日期)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.到期日期)
+                </td>
+                <td>
+                    @Html.ActionLink("编辑", "Edit", new { id = item.Contract_id, returnurl = @Request.Url }) |
+                    @Html.ActionLink("详情", "Details", new { id = item.Contract_id }) |
+                    @Html.ActionLink("删除", "Delete", new { id = item.Contract_id }) |
+                    @Html.ActionLink("流水", "Running", new { id = item.Contract_id })
+                </td>
+            </tr>
+        }
 
-</table>
-页面 @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    </table>
+    页面 @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("Index",
+    @Html.PagedListPager(Model, page => Url.Action("Index",
     new { page, nameFilter = ViewBag.nameFilter, productFilter = ViewBag.productFilter, statusFilter = ViewBag.statusFilter }))
-
 
