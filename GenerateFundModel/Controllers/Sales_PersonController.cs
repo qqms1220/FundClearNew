@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FundClear.Models;
+using PagedList;
 
 namespace FundClear.Controllers
 {
@@ -15,7 +16,7 @@ namespace FundClear.Controllers
         private Fund db = new Fund();
         [Authorize]
         // GET: Sales_Person
-        public ActionResult Index(int? SelectedBranch, string searchString)
+        public ActionResult Index(int? SelectedBranch, string searchString, int? page)
         {
             var sales_Person = db.Sales_Person.Include(s => s.Sales_Branch);
             var branches = db.Sales_Branch.OrderByDescending(b => b.分公司名称).ToList();
@@ -27,9 +28,14 @@ namespace FundClear.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
+                page = 1;
                 sales_Person = sales_Person.Where(s => s.理财师姓名.Contains(searchString));
-            }           
-            return View(sales_Person.ToList());
+            }
+            ViewBag.SelectedBranchFilter = SelectedBranch;
+            ViewBag.searchStringFilter = searchString;
+            int pageNumber = (page ?? 1);
+            return View(sales_Person.OrderByDescending(c => c.Sales_Person_Id).ToPagedList(pageNumber, Config.pageSize));  
+            //return View(sales_Person.ToList());
         }
         [Authorize]
         // GET: Sales_Person/Details/5
@@ -99,7 +105,11 @@ namespace FundClear.Controllers
             {
                 db.Entry(sales_Person).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                string url = Request.QueryString["returnurl"] != null ? Request.QueryString["returnurl"].ToString() : "";
+                if (url != "")
+                    Response.Redirect(url);
+                else
+                    return RedirectToAction("Index");                
             }
             ViewBag.Branch_Id = new SelectList(db.Sales_Branch, "Branch_id", "分公司名称", sales_Person.Branch_Id);
             return View(sales_Person);

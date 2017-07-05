@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FundClear.Models;
+using PagedList;
 
 namespace FundClear.Controllers
 {
@@ -15,20 +16,23 @@ namespace FundClear.Controllers
         private Fund db = new Fund();
         [Authorize]
         // GET: Sales_Branch
-        public ActionResult Index(string SearchString)
+        public ActionResult Index(string SearchString, int? page)
         {
             IQueryable<Sales_Branch> sales_Branches;
             if (!string.IsNullOrWhiteSpace(SearchString))
             {
+                page = 1;
                 SearchString = SearchString.Replace(" ", "");
                 sales_Branches = db.Sales_Branch.Where(b => b.分公司名称.Contains(SearchString));
             }
             else
             {
                 sales_Branches = db.Sales_Branch;
-            }         
-
-            return View(sales_Branches.ToList());
+            }
+            ViewBag.SearchString = SearchString;
+            int pageNumber = (page ?? 1);
+            return View(sales_Branches.OrderByDescending(d => d.Branch_id).ToPagedList(pageNumber, Config.pageSize));
+            //return View(sales_Branches.ToList());
         }
         [Authorize]
         // GET: Sales_Branch/Details/5
@@ -95,7 +99,11 @@ namespace FundClear.Controllers
             {
                 db.Entry(sales_Branch).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                string url = Request.QueryString["returnurl"] != null ? Request.QueryString["returnurl"].ToString() : "";
+                if (url != "")
+                    Response.Redirect(url);
+                else
+                    return RedirectToAction("Index");   
             }
             return View(sales_Branch);
         }

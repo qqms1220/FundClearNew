@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FundClear.Models;
+using PagedList;
 
 namespace FundClear.Controllers
 {
@@ -15,19 +16,23 @@ namespace FundClear.Controllers
         private Fund db = new Fund();
         [Authorize]
         // GET: Fix_Product
-        public ActionResult Index(string SearchString)
+        public ActionResult Index(string SearchString, int? page)
         {
             IQueryable<Fix_Product> fix_Product;
             if (!string.IsNullOrWhiteSpace(SearchString))
             {
+                page = 1;
                 SearchString = SearchString.Replace(" ", "");
                 fix_Product = db.Fix_Product.Include(f => f.Borrower).Where( p => p.产品名称.Contains(SearchString));
             }
             else
             {
                 fix_Product = db.Fix_Product.Include(f => f.Borrower);
-            }      
-            return View(fix_Product.ToList());
+            }
+            ViewBag.SearchString = SearchString;
+            int pageNumber = (page ?? 1);
+            return View(fix_Product.OrderByDescending(d => d.Product_id).ToPagedList(pageNumber, Config.pageSize));
+            //return View(fix_Product.ToList());
         }
             [Authorize]
         // GET: Fix_Product/Details/5
@@ -112,7 +117,11 @@ namespace FundClear.Controllers
             {
                 db.Entry(fix_Product).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                string url = Request.QueryString["returnurl"] != null ? Request.QueryString["returnurl"].ToString() : "";
+                if (url != "")
+                    Response.Redirect(url);
+                else
+                    return RedirectToAction("Index");                
             }
             ViewBag.Borrower_id = new SelectList(db.Borrower, "Borrower_id", "融资方名字", fix_Product.Borrower_id);
             return View(fix_Product);

@@ -277,13 +277,13 @@ namespace FundClear.Controllers
                 //先判断成立日期,如果不为空则到期日期加上存款月数
                 if(fix_Contract.成立日期 != null)
                 {
-                    fix_Contract.到期日期 = GetExpireDate(ContractType, ContractType == 1 ? fix_Contract.存款月数 : ContractDays, fix_Contract.成立日期.Value);
+                    fix_Contract.到期日期 = GetExpireDate(ContractType, ContractType == 0 ? fix_Contract.存款月数 : ContractDays, fix_Contract.成立日期.Value);
                 }
 
                 fix_Contract.录入人 = User.Identity.Name;
                 fix_Contract.输入时间 = DateTime.Now;
                 fix_Contract.存入方式 = ContractType;
-                fix_Contract.存款天数 = ContractType == 2 ? ContractDays : 0;
+                fix_Contract.存款天数 = ContractType == 1 ? ContractDays : 0;
 
                 db.Fix_Contract.Add(fix_Contract);
                 db.SaveChanges();
@@ -317,7 +317,7 @@ namespace FundClear.Controllers
             ViewBag.Salesperson_id = new SelectList(db.Sales_Person.OrderBy(i => i.理财师姓名), "Sales_Person_Id", "理财师姓名", fix_Contract.Salesperson_id);
             BindContractDays(fix_Contract.存款天数);
             BindContractType(fix_Contract.存入方式);
-            ViewData["PayType"] = fix_Contract.付息方式.Value.ToString() == "季末付" ? "true" : "false";
+            ViewData["PayType"] = fix_Contract.付息方式.ToString() == "季末付" ? "true" : "false";
             return View(fix_Contract);
         }
         //[Authorize]
@@ -335,17 +335,21 @@ namespace FundClear.Controllers
                 //先判断成立日期,如果不为空则到期日期加上存款月数
                 if (fix_Contract.成立日期 != null)
                 {
-                    fix_Contract.到期日期 = GetExpireDate(ContractType, ContractType == 1 ? fix_Contract.存款月数 : ContractDays, fix_Contract.成立日期.Value);
+                    fix_Contract.到期日期 = GetExpireDate(ContractType, ContractType == 0 ? fix_Contract.存款月数 : ContractDays, fix_Contract.成立日期.Value);
                 }
 
                 fix_Contract.录入人 = User.Identity.Name;
                 fix_Contract.输入时间 = DateTime.Now;
                 fix_Contract.存入方式 = ContractType;
-                fix_Contract.存款天数 = ContractType == 2 ? ContractDays : 0;
+                fix_Contract.存款天数 = ContractType == 1 ? ContractDays : 0;
 
                 db.Entry(fix_Contract).State = EntityState.Modified;
                 db.SaveChanges();
-                Response.Write("<script language=javascript>history.go(-2);</script>");
+                string url = Request.QueryString["returnurl"] != null ? Request.QueryString["returnurl"].ToString() : "";
+                if(url!="")
+                    Response.Redirect(url);
+                else
+                    Response.Write("<script language=javascript>history.go(-2);</script>");
              //   return RedirectToAction("Index");
            
             }
@@ -445,9 +449,9 @@ namespace FundClear.Controllers
         {
             switch (ContractType)
             {
-                case 1:
+                case 0:
                     return CreateDate.AddMonths(ContractTerm);
-                case 2:
+                case 1:
                     return CreateDate.AddDays(ContractTerm);
                 default:
                     return CreateDate.AddMonths(ContractTerm);

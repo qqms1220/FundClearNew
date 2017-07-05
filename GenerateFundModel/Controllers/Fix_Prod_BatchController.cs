@@ -180,7 +180,11 @@ namespace FundClear.Controllers
 
                 db.Entry(fix_Prod_Batch).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                string url = Request.QueryString["returnurl"] != null ? Request.QueryString["returnurl"].ToString() : "";
+                if (url != "")
+                    Response.Redirect(url);
+                else
+                    return RedirectToAction("Index");                
             }
    
             ViewBag.Product_id = new SelectList(db.Fix_Product, "Product_id", "产品名称", fix_Prod_Batch.Product_id);

@@ -115,7 +115,11 @@ namespace FundClear.Controllers
             {
                 db.Entry(borrower).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                string url = Request.QueryString["returnurl"] != null ? Request.QueryString["returnurl"].ToString() : "";
+                if (url != "")
+                    Response.Redirect(url);
+                else
+                    return RedirectToAction("Index"); 
             }
             return View(borrower);
         }
