@@ -277,7 +277,7 @@ namespace FundClear.Controllers
                 //先判断成立日期,如果不为空则到期日期加上存款月数
                 if(fix_Contract.成立日期 != null)
                 {
-                    fix_Contract.到期日期 = GetExpireDate(ContractType, ContractType == 1 ? fix_Contract.存款月数 : fix_Contract.存款天数, fix_Contract.成立日期.Value);
+                    fix_Contract.到期日期 = GetExpireDate(ContractType, ContractType == 1 ? fix_Contract.存款月数 : ContractDays, fix_Contract.成立日期.Value);
                 }
 
                 fix_Contract.录入人 = User.Identity.Name;
@@ -335,7 +335,7 @@ namespace FundClear.Controllers
                 //先判断成立日期,如果不为空则到期日期加上存款月数
                 if (fix_Contract.成立日期 != null)
                 {
-                    fix_Contract.到期日期 = GetExpireDate(ContractType, ContractType == 1 ? fix_Contract.存款月数 : fix_Contract.存款天数, fix_Contract.成立日期.Value);
+                    fix_Contract.到期日期 = GetExpireDate(ContractType, ContractType == 1 ? fix_Contract.存款月数 : ContractDays, fix_Contract.成立日期.Value);
                 }
 
                 fix_Contract.录入人 = User.Identity.Name;
@@ -426,6 +426,7 @@ namespace FundClear.Controllers
         private void BindContractDays(int value)
         {
             List<SelectListItem> List_ContractDays = new List<SelectListItem>();
+            List_ContractDays.Add(new SelectListItem() { Text = "请选择存款天数", Value = "0", Selected = value == 0 });
             List_ContractDays.Add(new SelectListItem() { Text = "30天", Value = "30", Selected = value == 30 });
             List_ContractDays.Add(new SelectListItem() { Text = "60天", Value = "60", Selected = value == 60 });
             List_ContractDays.Add(new SelectListItem() { Text = "90天", Value = "90", Selected = value == 90 });
