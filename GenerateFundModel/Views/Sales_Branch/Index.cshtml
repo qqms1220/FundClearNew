@@ -9,7 +9,7 @@
     $("#btnSubmit").click(function () {
         var strFilter = "";
         if ($("#SearchString").val().trim() != "")
-            strFilter += "&SearchString=" + $("#SearchString").val();
+            strFilter += "&SearchString=" + escape($("#SearchString").val());
         location.href = "/Sales_Branch?page=1" + strFilter;
     });
     })

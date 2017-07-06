@@ -7,7 +7,7 @@
     $("#btnSubmit").click(function () {
         var strFilter = "";
         if ($("#SearchString").val().trim() != "")
-            strFilter += "&searchString=" + $("#SearchString").val();
+            strFilter += "&searchString=" + escape($("#SearchString").val());
         location.href = "/Borrowers?page=1" + strFilter;
     });
     })

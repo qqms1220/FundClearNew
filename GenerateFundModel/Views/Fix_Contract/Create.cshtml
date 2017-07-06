@@ -52,7 +52,7 @@
     });
 
     $(document).ready(function () {
-        document.getElementById("txtMon").value = "0";
+        $("#txtMon").val("0");
         if ($("#ContractType").value == "1")
         {
             $("#ContractType_Month").hide();
@@ -69,7 +69,7 @@
                 $("#ContractType_Day").hide();
                 $("#PayDay").show();
                 document.getElementById("PType").selectedIndex = 1;
-                document.getElementById("txtPayDay").value = "20";
+                $("#txtPayDay").val("20");
             }
             else {
                 $("#ContractType_Month").hide();
@@ -77,18 +77,18 @@
                 $("#ContractType_Day").show();
                 document.getElementById("PType").selectedIndex = 2;
                 $("#PayDay").hide();
-                document.getElementById("txtPayDay").value = "0";
+                $("#txtPayDay").val("0");
             }
         })
         document.getElementById("PType").selectedIndex = 1;
-        document.getElementById("txtPayDay").value = "20";
+        $("#txtPayDay").val("20")
         $("#PType").change(function () {
             if (this.value == "1") {
-                document.getElementById("txtPayDay").value = "20";
+                $("#txtPayDay").val("20");
                 $("#PayDay").show();
             }
             else {
-                document.getElementById("txtPayDay").value = "0";
+                $("#txtPayDay").val("0");
                 $("#PayDay").hide();
             }
         });
@@ -103,16 +103,16 @@
                 datatype: "json",
                 success: function (data) {
                     if (data != null) {
-                        document.getElementById("UserName").value = data.UserName;
-                        document.getElementById("Phone").value = data.Phone;
-                        document.getElementById("Address").value = data.Address;
-                        document.getElementById("BJKHYH").value = data.BJKHYH;
-                        document.getElementById("BJZHM").value = data.BJZHM;
-                        document.getElementById("BJYHZH").value = data.BJYHZH;
-                        document.getElementById("SYKHYH").value = data.SYKHYH;
-                        document.getElementById("SYZHM").value = data.SYZHM;
-                        document.getElementById("SYYHZH").value = data.SYYHZH;
-                        document.getElementById("Branch_id").value = data.Branch_id;
+                        $("#UserName").val(data.UserName);
+                        $("#Phone").val(data.Phone);
+                        $("#Address").val(data.Address);
+                        $("#BJKHYH").val(data.BJKHYH);
+                        $("#BJZHM").val(data.BJZHM);
+                        $("#BJYHZH").val(data.BJYHZH);
+                        $("#SYKHYH").val(data.SYKHYH);
+                        $("#SYZHM").val(data.SYZHM);
+                        $("#SYYHZH").val(data.SYYHZH);
+                        $("#Branch_id").val(data.Branch_id);
                         $.ajax({
                             url: "/Fix_Contract/Sales_Persons?Branch_ID=" + data.Branch_id,
                             type: "get",
@@ -136,15 +136,15 @@
                 },
                 error: function (msg) {
                     //alert(msg.responseText);
-                    document.getElementById("UserName").value = "";
-                    document.getElementById("Phone").value = "";
-                    document.getElementById("Address").value = "";
-                    document.getElementById("BJKHYH").value = "";
-                    document.getElementById("BJZHM").value = "";
-                    document.getElementById("BJYHZH").value = "";
-                    document.getElementById("SYKHYH").value = "";
-                    document.getElementById("SYZHM").value = "";
-                    document.getElementById("SYYHZH").value = "";
+                    $("#UserName").val("");
+                    $("#Phone").val("");
+                    $("#Address").val("");
+                    $("#BJKHYH").val("");
+                    $("#BJZHM").val("");
+                    $("#BJYHZH").val("");
+                    $("#SYKHYH").val("");
+                    $("#SYZHM").val("");
+                    $("#SYYHZH").val("");
                     document.getElementById("Branch_id").selectedIndex = 0;
                     $("#Salesperson_id").empty();
                     $("#Salesperson_id").append("<option value =\"" + "\">" + "请选择理财师" + "</option>");
