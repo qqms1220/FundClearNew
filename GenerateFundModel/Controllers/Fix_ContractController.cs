@@ -397,7 +397,7 @@ namespace FundClear.Controllers
         public JsonResult Sales_Persons(int Branch_ID)
         {
             var SalesList = db.Sales_Person.Where(s => s.Branch_Id == Branch_ID).Select(p => new { p.Sales_Person_Id, p.理财师姓名 }).OrderBy(a => a.理财师姓名).ToList();
-            return Json(SalesList);
+            return Json(SalesList,JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)
@@ -456,6 +456,24 @@ namespace FundClear.Controllers
                 default:
                     return CreateDate.AddMonths(ContractTerm);
             }
+        }
+
+        public JsonResult getUserDetails(string CardID)
+        {
+            var model = db.Fix_Contract.Where(c => c.投资人身份证号 == CardID).OrderByDescending(c => c.Contract_id).Select(c => new { 
+                UserName=c.投资人姓名,
+                Phone=c.电话,
+                Address=c.地址,
+                BJKHYH=c.本金开户银行,
+                BJZHM=c.本金账户名,
+                BJYHZH=c.本金银行账号,
+                SYKHYH = c.收益开户银行,
+                SYZHM = c.收益账户名,
+                SYYHZH = c.收益银行账号,
+                Branch_id = c.Branch_id.Value,
+                Salesperson_id = c.Salesperson_id.Value
+            }).FirstOrDefault();
+            return Json(model,JsonRequestBehavior.AllowGet);
         }
     }
 }
