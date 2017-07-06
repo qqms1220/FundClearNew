@@ -14,6 +14,11 @@
             strFilter += "&SelectedBranch=" + document.getElementById("SelectedBranch").value;
         location.href = "/Sales_Person?page=1" + strFilter;
     });
+
+    $("#btnExport").click(function () {
+        if (confirm("是否导出所有理财师信息？"))
+            $("#formSubmit").submit();
+    });
     })
 </script>
 <h2>理财师列表</h2>
@@ -21,12 +26,14 @@
 <p>
     @Html.ActionLink("新建", "Create")   
 </p>
-@using (Html.BeginForm("Index", "Sales_Person", FormMethod.Post))
+@using (Html.BeginForm("Export", "public", FormMethod.Post, new { id = "formSubmit" }))
 {
     <p>
         分公司: @Html.DropDownList("SelectedBranch", "所有")      
         姓名: @Html.TextBox("searchString", ViewBag.searchString as string)
+        <input type="hidden" name="type" value="Sales_Person" />
         <input type="button" id="btnSubmit" value="过滤" />
+        <input type="button" id="btnExport" value="导出" />
     </p>
 }
 <table class="table">
@@ -74,8 +81,8 @@
         </td>
         <td>
             @Html.ActionLink("编辑", "Edit", new { id = item.Sales_Person_Id, returnurl = @Request.Url }) |
-            @Html.ActionLink("详情", "Details", new { id=item.Sales_Person_Id }) |
-            @Html.ActionLink("删除", "Delete", new { id=item.Sales_Person_Id })
+            @Html.ActionLink("详情", "Details", new { id = item.Sales_Person_Id, returnurl = @Request.Url }) |
+            @Html.ActionLink("删除", "Delete", new { id = item.Sales_Person_Id, returnurl = @Request.Url })
         </td>
     </tr>
 }

@@ -4,8 +4,8 @@
     ViewBag.Title = "客户进账明细表";
 }
 
-<h3 style="text-align: center;">@Html.DisplayFor(Model => Model.产品名称)</h3>
-<h5 style="text-align: center;">@Html.DisplayFor(Model => Model.托管账户开户行)   @Html.DisplayFor(Model => Model.托管账号)</h5>
+<h3 style="text-align: center;">@Html.DisplayFor(m => m.产品名称)</h3>
+<h5 style="text-align: center;">@Html.DisplayFor(m => m.托管账户开户行)   @Html.DisplayFor(m => m.托管账号)</h5>
 @foreach (FundClear.Models.Fix_Prod_Batch batch in Model.Fix_Prod_Batch)
 {
     <table class="table">

@@ -138,7 +138,7 @@ namespace FundClear.Controllers
             Sales_Person sales_Person = db.Sales_Person.Find(id);
             db.Sales_Person.Remove(sales_Person);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index");   
         }
         [Authorize]
         protected override void Dispose(bool disposing)

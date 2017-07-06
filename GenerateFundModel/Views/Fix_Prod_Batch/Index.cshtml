@@ -12,6 +12,11 @@
             strFilter += "&product_batch_status=" + document.getElementById("product_batch_status").value;
         location.href = "/Fix_Prod_Batch?page=1" + strFilter;
     });
+
+    $("#btnExport").click(function () {
+        if (confirm("是否导出所有产品批次信息？"))
+            $("#formSubmit").submit();
+    });
     })
 </script>
 
@@ -24,13 +29,15 @@
 <p>
     @Html.ActionLink("新建", "Create")
 </p>
-@using (Html.BeginForm())
+@using (Html.BeginForm("Export", "public", FormMethod.Post, new { id = "formSubmit" }))
 {
     <p>
         选择产品:
          @Html.DropDownList("SelectedProduct", "所有")     
-         @Html.DropDownList("product_batch_status", "所有")        
+         @Html.DropDownList("product_batch_status", "所有")      
+        <input type="hidden" name="type" value="Fix_Prod_Batch" />  
         <input type="button" id="btnSubmit" value="过滤" />
+        <input type="button" id="btnExport" value="导出" />
     </p>
 }
 <table class="table">

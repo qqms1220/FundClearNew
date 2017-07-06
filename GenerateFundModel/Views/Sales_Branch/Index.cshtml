@@ -12,6 +12,11 @@
             strFilter += "&SearchString=" + escape($("#SearchString").val());
         location.href = "/Sales_Branch?page=1" + strFilter;
     });
+
+    $("#btnExport").click(function () {
+        if (confirm("是否导出所有分公司信息？"))
+            $("#formSubmit").submit();
+    });
     })
 </script>
 
@@ -20,11 +25,13 @@
 <p>
     @Html.ActionLink("新建", "Create")
 </p>
-@using (Html.BeginForm("Index"))
+@using (Html.BeginForm("Export", "public", FormMethod.Post, new { id = "formSubmit" }))
 {
     <p>
         按产品名称筛选: @Html.TextBox("SearchString", ViewBag.SearchString as string)
+        <input type="hidden" name="type" value="Sales_Branch" />
         <input type="button" id="btnSubmit" value="查找" />
+        <input type="button" id="btnExport" value="导出" />
     </p>
 }
 <table class="table">

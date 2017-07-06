@@ -13,6 +13,11 @@
             strFilter += "&SearchString=" + $("#SearchString").val();
         location.href = "/Fix_Product?page=1" + strFilter;
     });
+
+    $("#btnExport").click(function () {
+        if (confirm("是否导出所有固收产品信息？"))
+            $("#formSubmit").submit();
+    });
     })
 </script>
 
@@ -21,11 +26,13 @@
 <p>
     @Html.ActionLink("新建", "Create")
 </p>
-@using (Html.BeginForm("Index"))
+@using (Html.BeginForm("Export", "public", FormMethod.Post, new { id = "formSubmit" }))
 {
     <p>
         按产品名称筛选: @Html.TextBox("SearchString", ViewBag.SearchString as string)
+        <input type="hidden" name="type" value="Fix_Product" />
         <input type="button" id="btnSubmit" value="过滤" />
+        <input type="button" id="btnExport" value="导出" />
     </p>
 }
 <table class="table">

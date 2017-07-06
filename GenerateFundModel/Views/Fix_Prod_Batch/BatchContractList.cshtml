@@ -5,12 +5,12 @@
 }
 @if (Model.Count() > 0)
 {
-    <h3 style="text-align: center;">@Html.DisplayFor(Model => Model.FirstOrDefault().Fix_Prod_Batch.批次名称)投资来源明细表</h3>
-    <h5>融资方：@Html.DisplayFor(Model => Model.FirstOrDefault().Fix_Product.Borrower.融资方名字) </h5>
-    <h5>批次金额：  @Html.DisplayFor(Model => Model.FirstOrDefault().Fix_Prod_Batch.批次金额)    </h5>
-    <h5>划款日期：  @Html.DisplayFor(Model => Model.FirstOrDefault().Fix_Prod_Batch.划款日期)    </h5>
-    <h5>批次收益率：  @Html.DisplayFor(Model => Model.FirstOrDefault().Fix_Prod_Batch.批次收益率)%    </h5>
-    <h5>入账合伙企业账户信息： @Html.DisplayFor(Model => Model.FirstOrDefault().Fix_Product.托管账户名) @Html.DisplayFor(Model => Model.FirstOrDefault().Fix_Product.托管账户开户行) @Html.DisplayFor(Model => Model.FirstOrDefault().Fix_Product.托管账号) </h5>
+    <h3 style="text-align: center;">@Html.DisplayFor(m => m.FirstOrDefault().Fix_Prod_Batch.批次名称)投资来源明细表</h3>
+    <h5>融资方：@Html.DisplayFor(m => m.FirstOrDefault().Fix_Product.Borrower.融资方名字) </h5>
+    <h5>批次金额：  @Html.DisplayFor(m => m.FirstOrDefault().Fix_Prod_Batch.批次金额)    </h5>
+    <h5>划款日期：  @Html.DisplayFor(m => m.FirstOrDefault().Fix_Prod_Batch.划款日期)    </h5>
+    <h5>批次收益率：  @Html.DisplayFor(m => m.FirstOrDefault().Fix_Prod_Batch.批次收益率)%    </h5>
+    <h5>入账合伙企业账户信息： @Html.DisplayFor(m => m.FirstOrDefault().Fix_Product.托管账户名) @Html.DisplayFor(m => m.FirstOrDefault().Fix_Product.托管账户开户行) @Html.DisplayFor(m => m.FirstOrDefault().Fix_Product.托管账号) </h5>
     <br />
     <h4>融资方付息进度表</h4>
     <table class="table">

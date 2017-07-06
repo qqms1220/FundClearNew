@@ -186,6 +186,7 @@
     <Compile Include="Controllers\FOF_ProductController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Controllers\Sales_BranchController.cs" />
     <Compile Include="Controllers\Sales_PersonController.cs" />
     <Compile Include="Controllers\到期项目表Controller.cs" />
@@ -337,6 +338,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="bin\" />
     <Folder Include="Upload\" />
+    <Folder Include="Views\Public\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
