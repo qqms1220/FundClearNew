@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "固定收益合同导入";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>固收合同导入</title>
+</head>
+<body>   
+    <h2>@ViewBag.Message</h2>
+    <div>
+        <form method="post" action="@Url.Action("Import")" enctype="multipart/form-data">
+            <input type="file" name="excel" id="excel" />
+            <br/>
+            <input type="submit" value="上传" />
+        </form>
+    </div>
+</body>
+</html>

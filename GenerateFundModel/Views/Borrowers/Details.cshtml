@@ -1,0 +1,74 @@
+﻿@model FundClear.Models.Borrower
+
+@{
+    ViewBag.Title = "融资方详情";
+}
+
+<h2>详情</h2>
+
+<div>
+    <h4>融资方</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.融资方名字)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.融资方名字)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.融资方开户银行)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.融资方开户银行)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.融资方账户名)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.融资方账户名)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.融资方银行账号)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.融资方银行账号)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.融资方电话)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.融资方电话)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.融资方电邮)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.融资方电邮)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.融资方地址)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.融资方地址)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("编辑", "Edit", new { id = Model.Borrower_id }) |
+    @Html.ActionLink("返回列表", "Index")
+</p>

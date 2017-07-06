@@ -1,0 +1,98 @@
+﻿@model FundClear.Models.FOF_Product
+
+@{
+    ViewBag.Title = "详情";
+}
+
+<h2>详情</h2>
+
+<div>
+    <h4>FOF产品</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.产品名称)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.产品名称)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.管理机构)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.管理机构)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.封闭月数)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.封闭月数)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.托管人)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.托管人)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.托管账户银行户名)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.托管账户银行户名)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.托管账户银行账号)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.托管账户银行账号)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.托管账号开户行)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.托管账号开户行)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.募集规模)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.募集规模)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.最低认购金额)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.最低认购金额)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.认购费率)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.认购费率)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("编辑", "Edit", new { id = Model.Product_id }) |
+    @Html.ActionLink("返回列表", "Index")
+</p>

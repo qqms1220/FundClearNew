@@ -1,0 +1,136 @@
+﻿@model FundClear.Models.客户兑付明细表
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>客户兑付明细表</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.进账日期)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.进账日期)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.姓名)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.姓名)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.金额)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.金额)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.本金归还账户)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.本金归还账户)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.分配日期)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.分配日期)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.收益率)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.收益率)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.到期本金)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.到期本金)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.到期收益)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.到期收益)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.收益分配账户)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.收益分配账户)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.购买期限)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.购买期限)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.分配方式)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.分配方式)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.客户入账账户)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.客户入账账户)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.项目批次)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.项目批次)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.备注)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.备注)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

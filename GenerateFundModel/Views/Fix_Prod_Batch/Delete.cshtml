@@ -1,0 +1,72 @@
+﻿@model FundClear.Models.Fix_Prod_Batch
+
+@{
+    ViewBag.Title = "删除";
+}
+
+<h2>删除 </h2>
+
+<h3>确定删除该记录吗?</h3>
+<div>
+    <h4>产品批次</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.产品批次状态)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.产品批次状态)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fix_Product.产品名称)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fix_Product.产品名称)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.批次名称)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.批次名称)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.批次金额)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.批次金额)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.批次创建人)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.批次创建人)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.批次创建时间)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.批次创建时间)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="删除" class="btn btn-default" /> |
+            @Html.ActionLink("返回列表", "Index")
+        </div>
+    }
+</div>

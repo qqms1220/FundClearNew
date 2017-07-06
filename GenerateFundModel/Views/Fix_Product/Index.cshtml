@@ -1,0 +1,93 @@
+﻿@model PagedList.IPagedList<FundClear.Models.Fix_Product>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "固收类产品列表";
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    $(document).ready(function(){
+    $("#btnSubmit").click(function () {
+        var strFilter = "";
+        if ($("#SearchString").val().trim() != "")
+            strFilter += "&SearchString=" + $("#SearchString").val();
+        location.href = "/Fix_Product?page=1" + strFilter;
+    });
+    })
+</script>
+
+<h2>固收类产品列表</h2>
+
+<p>
+    @Html.ActionLink("新建", "Create")
+</p>
+@using (Html.BeginForm("Index"))
+{
+    <p>
+        按产品名称筛选: @Html.TextBox("SearchString", ViewBag.SearchString as string)
+        <input type="button" id="btnSubmit" value="过滤" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            融资方名字
+        </th>
+        <th>
+            产品名称
+        </th>
+        <th>
+            产品状态
+        </th>
+        <th>
+            存期月数
+        </th>
+        <th>
+            募集规模
+        </th> 
+        <th>
+            付息方式
+        </th>
+        <th>
+            付息日
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Borrower.融资方名字)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.产品名称)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.产品状态)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.存期月数)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.募集规模)
+        </td> 
+        <td>
+            @Html.DisplayFor(modelItem => item.付息方式)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.付息日)
+        </td>
+        <td>
+            @Html.ActionLink("编辑", "Edit", new { id = item.Product_id, returnurl = @Request.Url }) |
+            @Html.ActionLink("详情", "Details", new { id=item.Product_id }) |
+            @Html.ActionLink("客户进账明细表", "BatchContracts", new { id = item.Product_id }) |
+            @Html.ActionLink("删除", "Delete", new { id=item.Product_id })
+        </td>
+    </tr>
+}
+
+</table>
+页面 @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page, SearchString = ViewBag.SearchString }))

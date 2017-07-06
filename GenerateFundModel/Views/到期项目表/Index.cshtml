@@ -1,0 +1,110 @@
+﻿@model PagedList.IPagedList<FundClear.Models.到期项目表>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "到期项目表";
+}
+
+<h2>到期项目表</h2>
+@using (Html.BeginForm("Index"))
+{
+    <p>
+        按借款人: @Html.TextBox("借款人",ViewBag.借款人过滤器 as string)
+        还款日期
+        @Html.TextBox("还款日期起始",ViewBag.还款日期起始过滤器 as string) 
+        至
+        @Html.TextBox("还款日期终止",ViewBag.还款日期终止过滤器 as string)
+        按合伙企业:@Html.TextBox("合伙企业",ViewBag.合伙企业过滤器 as string)
+        <input type="submit" value="过滤" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            融资方
+        </th>
+        <th>
+            合伙企业
+        </th>
+        <th>
+            还款日期
+        </th>
+        <th>
+            投资金额(万元)
+        </th>
+        <th>
+            回款本金
+        </th>
+        <th>
+            收益金额
+        </th>
+        <th>
+            服务费金额
+        </th>
+        <th>
+            回款金额
+        </th>
+        <th>
+            打款日期
+        </th>
+        <th>
+            产品期限
+        </th>
+        <th>
+            兑付方式
+        </th>
+        <th>
+            本期兑付内容
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.融资方)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.合伙企业)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.还款日期)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.投资金额)万
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.回款本金)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.收益金额)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.服务费金额)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.回款金额)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.打款日期)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.产品期限)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.兑付方式)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.本期兑付内容)
+        </td>
+        <td>
+            @*@Html.ActionLink("编辑", "Edit", new { id=item.ID }) |*@
+            @Html.ActionLink("详情", "Details", new { id=item.ID }) 
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
+        </td>
+    </tr>
+}
+</table>
+页面 @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, 借款人过滤器 = ViewBag.借款人过滤器, 还款日期起始过滤器 = ViewBag.还款日期起始过滤器, 还款日期终止过滤器 = ViewBag.还款日期终止过滤器, 合伙企业过滤器 = ViewBag.合伙企业过滤器 }))

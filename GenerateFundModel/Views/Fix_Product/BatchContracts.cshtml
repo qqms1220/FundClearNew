@@ -1,0 +1,65 @@
+﻿@model FundClear.Models.Fix_Product
+
+@{
+    ViewBag.Title = "客户进账明细表";
+}
+
+<h3 style="text-align: center;">@Html.DisplayFor(Model => Model.产品名称)</h3>
+<h5 style="text-align: center;">@Html.DisplayFor(Model => Model.托管账户开户行)   @Html.DisplayFor(Model => Model.托管账号)</h5>
+@foreach (FundClear.Models.Fix_Prod_Batch batch in Model.Fix_Prod_Batch)
+{
+    <table class="table">
+        <tr>
+            <th>入账日期</th>
+            <th>姓名</th>
+            <th>汇款银行</th>
+            <th>汇款银行账号</th>
+            <th>业务联系人</th>
+            <th>期限</th>
+            <th>金额</th>
+            <th>收益率</th>
+            <th>备注</th>
+        </tr>
+        @foreach (var item in batch.Fix_Contract)
+        {
+            <tr>               
+                <td>
+                    @Html.DisplayFor(modelItem => item.购买日期)
+                </td>   
+                <td>
+                    @Html.DisplayFor(modelItem => item.投资人姓名)
+                </td>    
+                <td>
+                    @Html.DisplayFor(modelItem => item.收益开户银行)
+                </td>       
+                <td>
+                    @Html.DisplayFor(modelItem => item.收益银行账号)
+                </td> 
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sales_Branch.分公司名称)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.存款月数)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.金额)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.收益率)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.备注)
+                </td>
+            </tr>
+        }
+    </table>
+    <h4 style="background-color:gold"> @Html.DisplayFor(modelItem => batch.划款日期)
+    @Html.DisplayFor(modelItem => batch.Fix_Product.Borrower.融资方开户银行)
+        @Html.DisplayFor(modelItem => batch.Fix_Product.Borrower.融资方银行账号)
+        @Html.DisplayFor(modelItem => batch.批次金额)
+        @Html.DisplayFor(modelItem => batch.批次名称)
+    </h4>
+}
+<p>
+    @Html.ActionLink("返回列表", "Index")
+</p>

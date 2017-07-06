@@ -1,0 +1,86 @@
+﻿@model PagedList.IPagedList<FundClear.Models.Sales_Person>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "理财师列表";
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    $(document).ready(function(){
+    $("#btnSubmit").click(function () {
+        var strFilter = "";
+        if ($("#searchString").val().trim() != "")
+            strFilter += "&searchString=" + escape($("#searchString").val());
+        if (document.getElementById("SelectedBranch").value != "")
+            strFilter += "&SelectedBranch=" + document.getElementById("SelectedBranch").value;
+        location.href = "/Sales_Person?page=1" + strFilter;
+    });
+    })
+</script>
+<h2>理财师列表</h2>
+
+<p>
+    @Html.ActionLink("新建", "Create")   
+</p>
+@using (Html.BeginForm("Index", "Sales_Person", FormMethod.Post))
+{
+    <p>
+        分公司: @Html.DropDownList("SelectedBranch", "所有")      
+        姓名: @Html.TextBox("searchString", ViewBag.searchString as string)
+        <input type="button" id="btnSubmit" value="过滤" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            分公司名称
+        </th>
+        <th>
+            理财师姓名
+        </th>
+        <th>
+            理财师身份证号
+        </th>
+        <th>
+            电话
+        </th>
+        <th>
+            电子邮件
+        </th>
+        <th>
+            状态
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sales_Branch.分公司名称)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.理财师姓名)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.理财师身份证号)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.电话)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.电子邮件)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.状态)
+        </td>
+        <td>
+            @Html.ActionLink("编辑", "Edit", new { id = item.Sales_Person_Id, returnurl = @Request.Url }) |
+            @Html.ActionLink("详情", "Details", new { id=item.Sales_Person_Id }) |
+            @Html.ActionLink("删除", "Delete", new { id=item.Sales_Person_Id })
+        </td>
+    </tr>
+}
+
+</table>
+    页面 @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",new { page, searchString = ViewBag.searchStringFilter, SelectedBranch = ViewBag.SelectedBranchFilter }))

@@ -1,0 +1,393 @@
+﻿@model FundClear.Models.Fix_Contract
+
+
+@{
+    ViewBag.Title = "固定收益合同录入"; 
+}
+
+<h2>新建</h2>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#Product_id").change(function () {
+            var ProductOptions = {};
+            ProductOptions.url = "/Fix_Contract/Batches";
+            ProductOptions.type = "POST";
+            ProductOptions.data = JSON.stringify({ Product_ID: $("#Product_id").val() });
+            ProductOptions.datatype = "json";
+            ProductOptions.contentType = "application/json";
+            ProductOptions.success = function (BatchList) {
+                $("#Batch_id").empty();
+                $("#Batch_id").append("<option value =\""  + "\">" + "请选择批次" + "</option>");
+                for (var i = 0; i < BatchList.length; i++) {
+                    $("#Batch_id").append("<option value =\"" + BatchList[i].Batch_id + "\">" + BatchList[i].批次名称 + "</option>");
+                }
+            };
+            ProductOptions.error = function () { alert("无法获取到批次信息!!"); };
+            $.ajax(ProductOptions);
+        }
+        )
+    });
+
+    $(document).ready(function () {
+        $("#Branch_id").change(
+            function () {
+            var BranchOptions = {};
+            BranchOptions.url = "/Fix_Contract/Sales_Persons";
+            BranchOptions.type = "POST";
+            BranchOptions.data = JSON.stringify({ Branch_ID: $("#Branch_id").val() });
+            BranchOptions.datatype = "json";
+            BranchOptions.contentType = "application/json";
+            BranchOptions.success = function (SalesList) {
+                $("#Salesperson_id").empty();
+                $("#Salesperson_id").append("<option value =\"" + "\">" + "请选择理财师" + "</option>");
+                for (var i = 0; i < SalesList.length; i++) {
+                    $("#Salesperson_id").append("<option value =\"" + SalesList[i].Sales_Person_Id + "\">" + SalesList[i].理财师姓名 + "</option>");
+                }
+            };
+            BranchOptions.error = function () { alert("无法获取到理财师信息!!"); };
+            $.ajax(BranchOptions);
+        }
+        )
+    });
+
+    $(document).ready(function () {
+        $("#txtMon").val("0");
+        if ($("#ContractType").value == "1")
+        {
+            $("#ContractType_Month").hide();
+            $("#ContractType_Day").show();            
+        }
+        else
+        {
+            $("#ContractType_Month").show();
+            $("#ContractType_Day").hide();
+        }
+        $("#ContractType").change(function () {            
+            if (this.value == "0") {
+                $("#ContractType_Month").show();
+                $("#ContractType_Day").hide();
+                $("#PayDay").show();
+                document.getElementById("PType").selectedIndex = 1;
+                $("#txtPayDay").val("20");
+            }
+            else {
+                $("#ContractType_Month").hide();
+                document.getElementById("txtMon").value = "0";
+                $("#ContractType_Day").show();
+                document.getElementById("PType").selectedIndex = 2;
+                $("#PayDay").hide();
+                $("#txtPayDay").val("0");
+            }
+        })
+        document.getElementById("PType").selectedIndex = 1;
+        $("#txtPayDay").val("20")
+        $("#PType").change(function () {
+            if (this.value == "1") {
+                $("#txtPayDay").val("20");
+                $("#PayDay").show();
+            }
+            else {
+                $("#txtPayDay").val("0");
+                $("#PayDay").hide();
+            }
+        });
+
+        $("#txtCard").blur(function () {
+            var card = $("#txtCard").val();
+            if (card.trim().length == 0)
+                return;
+            $.ajax({
+                url: "/Fix_Contract/getUserDetails?CardID=" + card,
+                type: "get",
+                datatype: "json",
+                success: function (data) {
+                    if (data != null) {
+                        $("#UserName").val(data.UserName);
+                        $("#Phone").val(data.Phone);
+                        $("#Address").val(data.Address);
+                        $("#BJKHYH").val(data.BJKHYH);
+                        $("#BJZHM").val(data.BJZHM);
+                        $("#BJYHZH").val(data.BJYHZH);
+                        $("#SYKHYH").val(data.SYKHYH);
+                        $("#SYZHM").val(data.SYZHM);
+                        $("#SYYHZH").val(data.SYYHZH);
+                        $("#Branch_id").val(data.Branch_id);
+                        $.ajax({
+                            url: "/Fix_Contract/Sales_Persons?Branch_ID=" + data.Branch_id,
+                            type: "get",
+                            datatype: "json",
+                            success: function (SalesList)
+                            {
+                                $("#Salesperson_id").empty();
+                                $("#Salesperson_id").append("<option value =\"" + "\">" + "请选择理财师" + "</option>");
+                                for (var i = 0; i < SalesList.length; i++) {
+                                    if (SalesList[i].Sales_Person_Id == data.Salesperson_id)
+                                        $("#Salesperson_id").append("<option value =\"" + SalesList[i].Sales_Person_Id + "\" selected=\"true\">" + SalesList[i].理财师姓名 + "</option>");
+                                    else
+                                        $("#Salesperson_id").append("<option value =\"" + SalesList[i].Sales_Person_Id + "\">" + SalesList[i].理财师姓名 + "</option>");
+                                }
+                            },
+                            error: function (emsg) {
+                                //alert(emsg.responseText);
+                            }
+                        });
+                    }
+                },
+                error: function (msg) {
+                    //alert(msg.responseText);
+                    $("#UserName").val("");
+                    $("#Phone").val("");
+                    $("#Address").val("");
+                    $("#BJKHYH").val("");
+                    $("#BJZHM").val("");
+                    $("#BJYHZH").val("");
+                    $("#SYKHYH").val("");
+                    $("#SYZHM").val("");
+                    $("#SYYHZH").val("");
+                    document.getElementById("Branch_id").selectedIndex = 0;
+                    $("#Salesperson_id").empty();
+                    $("#Salesperson_id").append("<option value =\"" + "\">" + "请选择理财师" + "</option>");
+                }
+            })
+        });
+    });
+</script>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>固收合同</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.合同号, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.合同号, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.合同号, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.投资人身份证号, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.投资人身份证号, new { htmlAttributes = new { id="txtCard", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.投资人身份证号, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.投资人姓名, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.投资人姓名, new { htmlAttributes = new { id="UserName", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.投资人姓名, "", new { @class = "text-danger" })
+            </div>
+        </div>        
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.电话, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.电话, new { htmlAttributes = new { id="Phone", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.电话, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.地址, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.地址, new { htmlAttributes = new { id="Address", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.地址, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Product_id, "产品", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">             
+                @Html.DropDownList("Product_id",null,"请选择产品", htmlAttributes: new { @class = "form-control" })                
+                @Html.ValidationMessageFor(model => model.Product_id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Batch_id, "产品批次", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Batch_id", null, htmlAttributes: new { @class = "form-control" })                
+                @Html.ValidationMessageFor(model => model.Batch_id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.金额, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.金额, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.金额, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("收益率%", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.收益率, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.收益率, "", new { @class = "text-danger" })
+            </div>
+        </div> 
+
+        <div class="form-group">
+            @Html.Label("存入方式", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ContractType",null, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group" id="ContractType_Month">
+            @Html.LabelFor(model => model.存款月数, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">                
+                @Html.EditorFor(model => model.存款月数, new { htmlAttributes = new { id="txtMon", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.存款月数, "", new { @class = "text-danger" })
+            </div>
+        </div>       
+
+        <div class="form-group" id="ContractType_Day">
+            @Html.LabelFor(model => model.存款天数, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ContractDays", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>  
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.付息方式, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.付息方式, htmlAttributes: new { id="PType", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.付息方式, "", new { @class = "text-danger" })
+            </div>
+        </div>      
+
+        <div class="form-group" id="PayDay">
+            @Html.LabelFor(model => model.付息日, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.付息日, new { htmlAttributes = new { id="txtPayDay",@class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.付息日, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.本金开户银行, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.本金开户银行, new { htmlAttributes = new { id = "BJKHYH", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.本金开户银行, "", new { @class = "text-danger" })
+            </div>
+        </div> 
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.本金账户名, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.本金账户名, new { htmlAttributes = new { id = "BJZHM", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.本金账户名, "", new { @class = "text-danger" })
+            </div>
+        </div> 
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.本金银行账号, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.本金银行账号, new { htmlAttributes = new { id = "BJYHZH", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.本金银行账号, "", new { @class = "text-danger" })
+            </div>
+        </div> 
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.收益开户银行, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.收益开户银行, new { htmlAttributes = new { id = "SYKHYH", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.收益开户银行, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.收益账户名, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.收益账户名, new { htmlAttributes = new { id = "SYZHM", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.收益账户名, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.收益银行账号, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.收益银行账号, new { htmlAttributes = new { id = "SYYHZH", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.收益银行账号, "", new { @class = "text-danger" })
+            </div>
+        </div> 
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Branch_id, "分公司", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Branch_id", null, "请选择分公司", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Branch_id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Salesperson_id, "理财师/渠道", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Salesperson_id", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Salesperson_id, "", new { @class = "text-danger" })
+            </div>
+        </div>               
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.购买日期, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.购买日期, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.购买日期, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.计息日期, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.计息日期, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.计息日期, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.成立日期, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.成立日期, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.成立日期, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.合同状态, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.合同状态, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.合同状态, "", new { @class = "text-danger" })
+            </div>
+        </div>        
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.备注, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.备注, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.备注, "", new { @class = "text-danger" })
+            </div>
+        </div>    
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="建立" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("返回列表", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

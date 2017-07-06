@@ -1,0 +1,104 @@
+﻿@model FundClear.Models.FOF_Product
+
+@{
+    ViewBag.Title = "删除";
+}
+
+<h2>删除</h2>
+
+<h3>你确定要删除该产品吗？</h3>
+<div>
+    <h4>FOF产品</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.产品名称)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.产品名称)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.管理机构)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.管理机构)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.封闭月数)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.封闭月数)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.托管人)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.托管人)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.托管账户银行户名)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.托管账户银行户名)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.托管账户银行账号)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.托管账户银行账号)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.托管账号开户行)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.托管账号开户行)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.募集规模)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.募集规模)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.最低认购金额)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.最低认购金额)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.认购费率)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.认购费率)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="删除" class="btn btn-default" /> |
+            @Html.ActionLink("返回列表", "Index")
+        </div>
+    }
+</div>

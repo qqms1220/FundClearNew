@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - 元亨祥基金清算系统</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        .navbar-inverse .navbar-brand{color:#fff;}
+        .navbar-inverse .navbar-nav > li > a {color:#fff;font-weight:bold;}
+    </style>
+
+</head>
+<body  onload="opener.location.reload()">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background:#D5B32B;border-color:#D5B32B;">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar">button1</span>
+                    <span class="icon-bar">button2</span>
+                    <span class="icon-bar">button3</span>
+                </button>
+                @Html.ActionLink("元亨祥基金清算系统", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>       
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">                       
+                        <li>@Html.ActionLink("融资方", "Index", "Borrowers")</li>
+                        <li>@Html.ActionLink("理财师", "Index", "Sales_Person")</li>
+                        <li>@Html.ActionLink("分公司", "Index", "Sales_Branch")</li>    
+                        <li>@Html.ActionLink("固收产品", "Index", "Fix_Product")</li>
+                        <li>@Html.ActionLink("产品批次", "Index", "Fix_Prod_Batch")</li>
+                        <li>@Html.ActionLink("固收合同", "Index", "Fix_Contract")</li>                     
+                        <li>@Html.ActionLink("FOF产品", "Index", "FOF_Product")</li>
+                        <li>@Html.ActionLink("FOF合同", "Index", "FOF_Contract")</li>                                          
+                    </ul> 
+                    @Html.Partial("_LoginPartial")
+</div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - 元亨祥基金清算系统</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

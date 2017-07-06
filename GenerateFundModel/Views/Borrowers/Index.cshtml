@@ -1,0 +1,79 @@
+﻿@model PagedList.IPagedList<FundClear.Models.Borrower>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    $(document).ready(function(){
+    $("#btnSubmit").click(function () {
+        var strFilter = "";
+        if ($("#SearchString").val().trim() != "")
+            strFilter += "&searchString=" + escape($("#SearchString").val());
+        location.href = "/Borrowers?page=1" + strFilter;
+    });
+    })
+</script>
+@{
+    ViewBag.Title = "融资方列表";
+}
+
+<h2>融资方列表</h2>
+
+<p>
+    @Html.ActionLink("新建", "Create")
+</p>
+@using (Html.BeginForm("Index", "Borrowers", FormMethod.Post))
+{
+    <p>
+        按名称查找: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string) 
+        <input type="button" id="btnSubmit" value="查找" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("融资方名称", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            电话
+        </th>
+        <th>
+            电邮
+        </th>
+        <th>
+            地址
+        </th>
+       
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.融资方名字)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.融资方电话)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.融资方电邮)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.融资方地址)
+            </td>
+           
+            <td>
+                @Html.ActionLink("编辑", "Edit", new { id = item.Borrower_id, returnurl = @Request.Url }) |
+                @Html.ActionLink("详情", "Details", new { id = item.Borrower_id }) |
+                @Html.ActionLink("删除", "Delete", new { id = item.Borrower_id })
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+页面 @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

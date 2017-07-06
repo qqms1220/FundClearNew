@@ -1,0 +1,56 @@
+﻿@model FundClear.Models.Sales_Branch
+
+@{
+    ViewBag.Title = "删除";
+}
+
+<h2>删除</h2>
+
+<h3>你确定要删除该记录吗?</h3>
+<div>
+    <h4>分公司/渠道</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.分公司名称)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.分公司名称)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.分公司地址)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.分公司地址)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.电话)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.电话)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.联系人)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.联系人)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="删除" class="btn btn-default" /> |
+            @Html.ActionLink("返回列表", "Index")
+        </div>
+    }
+</div>

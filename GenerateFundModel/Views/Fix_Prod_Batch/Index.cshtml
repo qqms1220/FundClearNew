@@ -1,0 +1,109 @@
+﻿@model PagedList.IPagedList<FundClear.Models.Fix_Prod_Batch>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    $(document).ready(function(){
+    $("#btnSubmit").click(function () {
+        var strFilter = "";
+        if (document.getElementById("SelectedProduct").value != "")
+            strFilter += "&SelectedProduct=" + document.getElementById("SelectedProduct").value;
+        if (document.getElementById("product_batch_status").value != "")
+            strFilter += "&product_batch_status=" + document.getElementById("product_batch_status").value;
+        location.href = "/Fix_Prod_Batch?page=1" + strFilter;
+    });
+    })
+</script>
+
+@{
+    ViewBag.Title = "产品批次列表";
+}
+
+<h2>产品批次列表</h2>
+
+<p>
+    @Html.ActionLink("新建", "Create")
+</p>
+@using (Html.BeginForm())
+{
+    <p>
+        选择产品:
+         @Html.DropDownList("SelectedProduct", "所有")     
+         @Html.DropDownList("product_batch_status", "所有")        
+        <input type="button" id="btnSubmit" value="过滤" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            产品批次状态
+        </th>
+        <th>
+            产品名称
+        </th>
+        <th>
+            批次名称
+        </th>
+        <th>
+            批次已募集金额
+        </th>      
+        <th>
+            批次收益率
+        </th>
+        <th>
+            服务费率
+        </th>
+        <th>
+            付息方式
+        </th>
+        <th>
+            划款日期
+        </th>
+        <th>
+            到期日期
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.产品批次状态)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fix_Product.产品名称)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.批次名称)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.批次金额)
+        </td>        
+        <td>
+            @Html.DisplayFor(modelItem => item.批次收益率)%
+        </td>   
+        <td>
+            @Html.DisplayFor(modelItem => item.服务费率)%
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.付息方式)
+        </td>   
+        <td>
+            @Html.DisplayFor(modelItem => item.划款日期)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.到期日期)
+        </td>
+        <td>
+            @Html.ActionLink("编辑", "Edit", new { id = item.Batch_id, returnurl = @Request.Url }) |
+            @Html.ActionLink("详情", "Details", new { id=item.Batch_id }) |
+            @Html.ActionLink("投资来源明细表", "BatchContractList", new { BatchID = item.Batch_id }) |
+            @Html.ActionLink("删除", "Delete", new { id=item.Batch_id })
+        </td>
+    </tr>
+}
+</table>
+页面 @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, productFilter = ViewBag.productFilter, batchStatusFilter = ViewBag.batchStatusFilter }))

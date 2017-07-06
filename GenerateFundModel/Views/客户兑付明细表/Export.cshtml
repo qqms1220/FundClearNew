@@ -1,0 +1,18 @@
+﻿@model IEnumerable<FundClear.Models.客户兑付明细表>
+
+@{
+    ViewBag.Title = "客户兑付明细表";
+}
+
+<h2>客户兑付明细表</h2>
+@using (Html.BeginForm("Export"))
+{
+    <p>
+        按姓名: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        按分配日期:@Html.TextBox("分配日期",ViewBag.分配日期 as string)
+        按实际兑付日期:@Html.TextBox("实际兑付日期", ViewBag.实际兑付日期 as string)       
+        按项目批次:@Html.TextBox("项目批次",ViewBag.项目批次 as string)
+        <input type="submit" value="导出" />       
+    </p>
+}
+

@@ -1,0 +1,107 @@
+﻿@model IEnumerable<FundClear.Models.Fix_Contract>
+
+@{
+    ViewBag.Title = "批次合同列表";
+}
+@if (Model.Count() > 0)
+{
+    <h3 style="text-align: center;">@Html.DisplayFor(Model => Model.FirstOrDefault().Fix_Prod_Batch.批次名称)投资来源明细表</h3>
+    <h5>融资方：@Html.DisplayFor(Model => Model.FirstOrDefault().Fix_Product.Borrower.融资方名字) </h5>
+    <h5>批次金额：  @Html.DisplayFor(Model => Model.FirstOrDefault().Fix_Prod_Batch.批次金额)    </h5>
+    <h5>划款日期：  @Html.DisplayFor(Model => Model.FirstOrDefault().Fix_Prod_Batch.划款日期)    </h5>
+    <h5>批次收益率：  @Html.DisplayFor(Model => Model.FirstOrDefault().Fix_Prod_Batch.批次收益率)%    </h5>
+    <h5>入账合伙企业账户信息： @Html.DisplayFor(Model => Model.FirstOrDefault().Fix_Product.托管账户名) @Html.DisplayFor(Model => Model.FirstOrDefault().Fix_Product.托管账户开户行) @Html.DisplayFor(Model => Model.FirstOrDefault().Fix_Product.托管账号) </h5>
+    <br />
+    <h4>融资方付息进度表</h4>
+    <table class="table">
+        <tr>
+            <th>日期</th>
+            <th>收益金额</th>
+            <th>本金金额</th>
+            <th>服务费金额</th>
+            <th>回款总金额</th>
+        </tr>
+        @foreach (FundClear.Models.到期项目表 item in Model.FirstOrDefault().Fix_Prod_Batch.到期项目表)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.还款日期)</td>
+                <td>@Html.DisplayFor(modelItem => item.收益金额)</td>
+                <td>@Html.DisplayFor(modelItem => item.回款本金)</td>
+                <td>@Html.DisplayFor(modelItem => item.服务费金额)</td>
+                <td>@Html.DisplayFor(modelItem => item.回款金额)</td>
+            </tr>
+        }
+    </table>
+    <h4>投资来源列表</h4>
+    <table class="table">
+        <tr>
+            <th>
+                客户
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.金额)
+            </th>
+            <th>
+                本金归还账户
+            </th>
+            <th>
+                入账日期
+            </th>
+            <th>
+                分公司
+            </th>
+            <th>
+                期限
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.收益率)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.备注)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.投资人姓名)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.金额)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.本金银行账号) @Html.DisplayFor(modelItem => item.本金开户银行)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.购买日期)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sales_Branch.分公司名称)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.存款月数)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.收益率)%
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.备注)
+                </td>
+            </tr>
+        }
+    </table>
+    <h5>合同总数：@Model.Count()</h5>
+    <h5>合计: @Model.Sum(c => c.金额).ToString("C")</h5>
+}
+else
+{
+
+
+    <h4>暂无记录</h4>
+}
+
+<div>
+    @Html.ActionLink("返回批次列表", "Index")
+</div>
