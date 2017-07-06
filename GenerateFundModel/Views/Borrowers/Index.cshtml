@@ -1,7 +1,17 @@
 ﻿@model PagedList.IPagedList<FundClear.Models.Borrower>
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
-
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    $(document).ready(function(){
+    $("#btnSubmit").click(function () {
+        var strFilter = "";
+        if ($("#SearchString").val().trim() != "")
+            strFilter += "&searchString=" + $("#SearchString").val();
+        location.href = "/Borrowers?page=1" + strFilter;
+    });
+    })
+</script>
 @{
     ViewBag.Title = "融资方列表";
 }
@@ -15,7 +25,7 @@
 {
     <p>
         按名称查找: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string) 
-        <input type="submit" value="查找" />
+        <input type="button" id="btnSubmit" value="查找" />
     </p>
 }
 <table class="table">
@@ -54,7 +64,7 @@
             </td>
            
             <td>
-                @Html.ActionLink("编辑", "Edit", new { id = item.Borrower_id }) |
+                @Html.ActionLink("编辑", "Edit", new { id = item.Borrower_id, returnurl = @Request.Url }) |
                 @Html.ActionLink("详情", "Details", new { id = item.Borrower_id }) |
                 @Html.ActionLink("删除", "Delete", new { id = item.Borrower_id })
             </td>

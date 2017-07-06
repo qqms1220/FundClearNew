@@ -94,7 +94,7 @@ namespace FundClear.Models
         public DateTime? 到期日期 { get; set; }
 
    
-        public 付息方式? 付息方式 { get; set; }
+        public 付息方式 付息方式 { get; set; }
 
         public int? 付息日 { get; set; }
 

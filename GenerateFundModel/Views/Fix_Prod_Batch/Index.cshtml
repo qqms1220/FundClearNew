@@ -1,6 +1,19 @@
 ﻿@model PagedList.IPagedList<FundClear.Models.Fix_Prod_Batch>
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script>
+    $(document).ready(function(){
+    $("#btnSubmit").click(function () {
+        var strFilter = "";
+        if (document.getElementById("SelectedProduct").value != "")
+            strFilter += "&SelectedProduct=" + document.getElementById("SelectedProduct").value;
+        if (document.getElementById("product_batch_status").value != "")
+            strFilter += "&product_batch_status=" + document.getElementById("product_batch_status").value;
+        location.href = "/Fix_Prod_Batch?page=1" + strFilter;
+    });
+    })
+</script>
 
 @{
     ViewBag.Title = "产品批次列表";
@@ -17,7 +30,7 @@
         选择产品:
          @Html.DropDownList("SelectedProduct", "所有")     
          @Html.DropDownList("product_batch_status", "所有")        
-        <input type="submit" value="筛选" />
+        <input type="button" id="btnSubmit" value="过滤" />
     </p>
 }
 <table class="table">
@@ -82,7 +95,7 @@
             @Html.DisplayFor(modelItem => item.到期日期)
         </td>
         <td>
-            @Html.ActionLink("编辑", "Edit", new { id=item.Batch_id }) |
+            @Html.ActionLink("编辑", "Edit", new { id = item.Batch_id, returnurl = @Request.Url }) |
             @Html.ActionLink("详情", "Details", new { id=item.Batch_id }) |
             @Html.ActionLink("投资来源明细表", "BatchContractList", new { BatchID = item.Batch_id }) |
             @Html.ActionLink("删除", "Delete", new { id=item.Batch_id })

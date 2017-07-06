@@ -30,7 +30,8 @@
     });
 
     $(document).ready(function () {
-        $("#Branch_id").change(function () {
+        $("#Branch_id").change(
+            function () {
             var BranchOptions = {};
             BranchOptions.url = "/Fix_Contract/Sales_Persons";
             BranchOptions.type = "POST";
@@ -111,12 +112,42 @@
                         document.getElementById("SYKHYH").value = data.SYKHYH;
                         document.getElementById("SYZHM").value = data.SYZHM;
                         document.getElementById("SYYHZH").value = data.SYYHZH;
-                        //document.getElementById("Branch_id").value = data.Branch_id;
-                        //document.getElementById("Salesperson_id").value = data.Salesperson_id;
+                        document.getElementById("Branch_id").value = data.Branch_id;
+                        $.ajax({
+                            url: "/Fix_Contract/Sales_Persons?Branch_ID=" + data.Branch_id,
+                            type: "get",
+                            datatype: "json",
+                            success: function (SalesList)
+                            {
+                                $("#Salesperson_id").empty();
+                                $("#Salesperson_id").append("<option value =\"" + "\">" + "请选择理财师" + "</option>");
+                                for (var i = 0; i < SalesList.length; i++) {
+                                    if (SalesList[i].Sales_Person_Id == data.Salesperson_id)
+                                        $("#Salesperson_id").append("<option value =\"" + SalesList[i].Sales_Person_Id + "\" selected=\"true\">" + SalesList[i].理财师姓名 + "</option>");
+                                    else
+                                        $("#Salesperson_id").append("<option value =\"" + SalesList[i].Sales_Person_Id + "\">" + SalesList[i].理财师姓名 + "</option>");
+                                }
+                            },
+                            error: function (emsg) {
+                                //alert(emsg.responseText);
+                            }
+                        });
                     }
                 },
                 error: function (msg) {
                     //alert(msg.responseText);
+                    document.getElementById("UserName").value = "";
+                    document.getElementById("Phone").value = "";
+                    document.getElementById("Address").value = "";
+                    document.getElementById("BJKHYH").value = "";
+                    document.getElementById("BJZHM").value = "";
+                    document.getElementById("BJYHZH").value = "";
+                    document.getElementById("SYKHYH").value = "";
+                    document.getElementById("SYZHM").value = "";
+                    document.getElementById("SYYHZH").value = "";
+                    document.getElementById("Branch_id").selectedIndex = 0;
+                    $("#Salesperson_id").empty();
+                    $("#Salesperson_id").append("<option value =\"" + "\">" + "请选择理财师" + "</option>");
                 }
             })
         });

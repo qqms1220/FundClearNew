@@ -57,10 +57,10 @@ namespace FundClear.Models
     }
 
     /// <summary>
-    /// 存入方式，按月存入值1，按天存入值2
+    /// 存入方式，按月存入值0，按天存入值1
     /// </summary>
     public enum 存入方式
     {
-        按月存入=1, 按天存入=2
+        按月存入, 按天存入
     }
 }
